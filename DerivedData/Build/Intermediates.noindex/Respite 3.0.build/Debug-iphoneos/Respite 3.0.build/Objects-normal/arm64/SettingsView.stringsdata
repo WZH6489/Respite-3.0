@@ -1,0 +1,32 @@
+{
+  "source": "/Users/justintan/Downloads/Respite_3.0/Respite 3.0/Settings/SettingsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Settings",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "General",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 7
+        }
+      },
+      {
+        "comment": "",
+        "key": "Settings placeholder",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 8
+        }
+      }
+    ]
+  },
+  "version": 1
+}
