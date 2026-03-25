@@ -1,0 +1,16 @@
+{
+  "source": "/Users/justintan/Downloads/Respite_3.0/Respite 3.0/Dashboard/DashboardView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Respite",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 41
+        }
+      }
+    ]
+  },
+  "version": 1
+}
