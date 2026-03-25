@@ -1,0 +1,22 @@
+# Xcode / build products
+DerivedData/
+build/
+*.xcuserstate
+*.xcscmblueprint
+
+# Per-user Xcode settings (keep schemes in xcshareddata if you need shared schemes)
+**/xcuserdata/
+
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# macOS
+.DS_Store
+
+# SwiftPM
+.swiftpm/
+
+# Local archives (optional)
+*.zip

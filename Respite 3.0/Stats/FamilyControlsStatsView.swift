@@ -113,6 +113,22 @@ struct FamilyControlsStatsView: View {
                     .foregroundStyle(.secondary)
             }
 
+        @unknown default:
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Family Controls status updated.")
+                    .font(.headline)
+                Text("Please refresh authorization to continue.")
+                    .foregroundStyle(.secondary)
+
+                Button {
+                    Task { await requestAuthorization() }
+                } label: {
+                    Text("Refresh Authorization")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+            }
+
         }
     }
 
