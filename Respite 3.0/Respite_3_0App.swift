@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct Respite_3_0App: App {
+    @StateObject private var interventions = InterventionManager()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(interventions)
+                .onOpenURL { url in
+                    RegulationURLHandler.handle(url, interventions: interventions)
+                }
         }
     }
 }

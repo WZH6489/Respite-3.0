@@ -1,12 +1,18 @@
 import SwiftUI
+import UIKit
 
 struct PuzzleBreakView: View {
     @Binding var isPresented: Bool
+    var isRegulationSession: Bool = false
+    var onSuccessfulSolve: (() -> Void)? = nil
+
     @State private var puzzle: MathPuzzle = .random()
     @State private var userAnswer: String = ""
     @State private var phase: PuzzlePhase = .solving
     @State private var shakeOffset: CGFloat = 0
     @State private var attemptsLeft: Int = 3
+    @State private var didCompleteRegulationSolve = false
+    @State private var showTikTokNudge = false
     @FocusState private var isInputFocused: Bool
 
     enum PuzzlePhase {
@@ -36,7 +42,44 @@ struct PuzzleBreakView: View {
             }
             .background(Color(.systemGroupedBackground))
             .onAppear { isInputFocused = true }
+            .safeAreaInset(edge: .bottom) {
+                if showTikTokNudge {
+                    tikTokNudgeBar
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 8)
+                }
+            }
         }
+    }
+
+    private var regulationCorrectSubtitle: String {
+        if isRegulationSession {
+            return "You're unlocked for a short grace period — head back when you're ready."
+        }
+        return "Nice work — your brain is sharper than a TikTok algorithm."
+    }
+
+    private var tikTokNudgeBar: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Return to your app")
+                .font(.subheadline.weight(.semibold))
+            Text("TikTok should open for you now during your grace window.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            Button {
+                if let url = URL(string: "tiktok://") {
+                    UIApplication.shared.open(url)
+                }
+            } label: {
+                Label("Open TikTok", systemImage: "arrow.up.right.square")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .padding(16)
+        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemGroupedBackground)))
     }
 
     @ViewBuilder
@@ -48,7 +91,7 @@ struct PuzzleBreakView: View {
             resultView(
                 emoji: "🎉",
                 title: "Correct!",
-                subtitle: "Nice work — your brain is sharper than a TikTok algorithm.",
+                subtitle: regulationCorrectSubtitle,
                 color: .green
             )
         case .failed:
@@ -181,7 +224,7 @@ struct PuzzleBreakView: View {
                     .padding(.horizontal, 8)
             }
 
-            if phase == .correct {
+            if phase == .correct && !isRegulationSession {
                 Button {
                     puzzle = .random()
                     userAnswer = ""
@@ -224,6 +267,11 @@ struct PuzzleBreakView: View {
         if typed == puzzle.answer {
             withAnimation(.spring(response: 0.5)) {
                 phase = .correct
+            }
+            if isRegulationSession, !didCompleteRegulationSolve {
+                didCompleteRegulationSolve = true
+                onSuccessfulSolve?()
+                showTikTokNudge = true
             }
         } else {
             attemptsLeft -= 1

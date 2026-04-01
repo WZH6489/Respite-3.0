@@ -1,7 +1,11 @@
 import SwiftUI
+import UIKit
 
 struct BreathworkTimerView: View {
     @Binding var isPresented: Bool
+    var isRegulationSession: Bool = false
+    var onRegulationComplete: (() -> Void)? = nil
+
     @State private var breathPhase: BreathPhase = .ready
     @State private var countdown: Int = 0
     @State private var cyclesCompleted: Int = 0
@@ -9,6 +13,8 @@ struct BreathworkTimerView: View {
     @State private var ringOpacity: Double = 0.4
     @State private var timer: Timer? = nil
     @State private var elapsedInPhase: Int = 0
+    @State private var didCallRegulationComplete = false
+    @State private var showTikTokNudge = false
 
     private let totalCycles = 3
 
@@ -89,7 +95,37 @@ struct BreathworkTimerView: View {
                     .foregroundStyle(.secondary)
                 }
             }
+            .safeAreaInset(edge: .bottom) {
+                if showTikTokNudge {
+                    tikTokNudgeBar
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 8)
+                }
+            }
         }
+    }
+
+    private var tikTokNudgeBar: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Return to your app")
+                .font(.subheadline.weight(.semibold))
+            Text("TikTok should open for you now during your grace window.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            Button {
+                if let url = URL(string: "tiktok://") {
+                    UIApplication.shared.open(url)
+                }
+            } label: {
+                Label("Open TikTok", systemImage: "arrow.up.right.square")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .padding(16)
+        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemGroupedBackground)))
     }
 
     private var backgroundGradient: some View {
@@ -216,15 +252,17 @@ struct BreathworkTimerView: View {
                 }
             case .done:
                 VStack(spacing: 12) {
-                    Button {
-                        resetSession()
-                    } label: {
-                        Text("Go again")
-                            .font(.headline)
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .background(RoundedRectangle(cornerRadius: 14).fill(Color.green))
+                    if !isRegulationSession {
+                        Button {
+                            resetSession()
+                        } label: {
+                            Text("Go again")
+                                .font(.headline)
+                                .foregroundStyle(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 16)
+                                .background(RoundedRectangle(cornerRadius: 14).fill(Color.green))
+                        }
                     }
                     Button { isPresented = false } label: {
                         Text("I'm done")
@@ -291,6 +329,11 @@ struct BreathworkTimerView: View {
                 }
                 ringScale = 0.6
                 ringOpacity = 0.4
+                if isRegulationSession, !didCallRegulationComplete {
+                    didCallRegulationComplete = true
+                    onRegulationComplete?()
+                    showTikTokNudge = true
+                }
             } else {
                 startPhase(.inhale)
             }
