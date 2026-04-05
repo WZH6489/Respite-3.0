@@ -1,6 +1,9 @@
 import DeviceActivity
 import Foundation
 
+private let tiktokUsageActivityId = "com.stormforge.Respite.tiktokUsage"
+private let tiktokUsageThresholdId = "tiktokUsageThreshold"
+
 @objc(RespiteDeviceActivityMonitor)
 final class RespiteDeviceActivityMonitor: DeviceActivityMonitor {
     nonisolated override init() {
@@ -18,6 +21,9 @@ final class RespiteDeviceActivityMonitor: DeviceActivityMonitor {
 
     nonisolated override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
         super.eventDidReachThreshold(event, activity: activity)
+        if activity.rawValue == tiktokUsageActivityId, event.rawValue == tiktokUsageThresholdId {
+            RegulationMonitorShield.recordTikTokUsageNow()
+        }
         RegulationMonitorShield.applyShieldAfterThreshold()
     }
 }

@@ -2,6 +2,11 @@ import SwiftUI
 
 struct TikTokIntentGateView: View {
     @Binding var isPresented: Bool
+    /// When true, triggered from a shield deep link — grants TikTok grace unlock on completion.
+    var isRegulationSession: Bool = false
+    /// Called after the user completes the intent check (before dismissal).
+    var onComplete: (() -> Void)? = nil
+
     @State private var selectedReason: IntentReason? = nil
     @State private var showingContinue = false
 
@@ -141,6 +146,7 @@ struct TikTokIntentGateView: View {
     private var continueButton: some View {
         VStack(spacing: 10) {
             Button {
+                onComplete?()
                 isPresented = false
             } label: {
                 Text("Continue to TikTok")

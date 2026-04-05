@@ -16,6 +16,7 @@ struct Respite_3_0App: App {
             ContentView()
                 .environmentObject(interventions)
                 .onOpenURL { url in
+                    RespiteShortcutDelivery.clearPendingIfMatches(url)
                     RegulationURLHandler.handle(url, interventions: interventions)
                 }
         }

@@ -6,14 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXFileReference section */
-		26F650CA2F67407000E9FBC1 /* Respite 3.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Respite 3.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C4CED61CC5E362FB3FD022C /* DeviceActivityReportExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeviceActivityReportExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		E90100062F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeviceActivityMonitorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		E90100072F67407000E9FBC1 /* ShieldConfigurationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShieldConfigurationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		E90100082F67407000E9FBC1 /* ShieldActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShieldActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-/* End PBXFileReference section */
-
 /* Begin PBXBuildFile section */
 		E90100012F67407000E9FBC1 /* DeviceActivityReportExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7C4CED61CC5E362FB3FD022C /* DeviceActivityReportExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E90100022F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E90100062F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -21,9 +13,90 @@
 		E90100042F67407000E9FBC1 /* ShieldActionExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E90100082F67407000E9FBC1 /* ShieldActionExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E90100222F67407000E9FBC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 501D870E41296815F817F615;
+			remoteInfo = DeviceActivityReportExtension;
+		};
+		E90100242F67407000E9FBC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E901000C2F67407000E9FBC1;
+			remoteInfo = DeviceActivityMonitorExtension;
+		};
+		E90100262F67407000E9FBC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E901000D2F67407000E9FBC1;
+			remoteInfo = ShieldConfigurationExtension;
+		};
+		E90100282F67407000E9FBC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E901000E2F67407000E9FBC1;
+			remoteInfo = ShieldActionExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E90100052F67407000E9FBC1 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E90100012F67407000E9FBC1 /* DeviceActivityReportExtension.appex in Embed App Extensions */,
+				E90100022F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex in Embed App Extensions */,
+				E90100032F67407000E9FBC1 /* ShieldConfigurationExtension.appex in Embed App Extensions */,
+				E90100042F67407000E9FBC1 /* ShieldActionExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2682ED9F2F80589B00361DD6 /* DeviceActivityReportExtension-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "DeviceActivityReportExtension-Info.plist"; sourceTree = "<group>"; };
+		26F650CA2F67407000E9FBC1 /* Respite 3.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Respite 3.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C4CED61CC5E362FB3FD022C /* DeviceActivityReportExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = DeviceActivityReportExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E90100062F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeviceActivityMonitorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E90100072F67407000E9FBC1 /* ShieldConfigurationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShieldConfigurationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E90100082F67407000E9FBC1 /* ShieldActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShieldActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AA0000032F67407000E9FBC1 /* Exceptions for "Respite 3.0" folder in "Respite 3.0" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"DeviceActivityMonitorExtension/DeviceActivityMonitorExtension.entitlements",
+				"DeviceActivityMonitorExtension/RegulationMonitorSupport.swift",
+				"DeviceActivityMonitorExtension/RespiteDeviceActivityMonitor.swift",
+				"DeviceActivityReportExtension/ActivityBreakdownReport.swift",
+				"DeviceActivityReportExtension/ActivityBreakdownView.swift",
+				"DeviceActivityReportExtension/DeviceActivityReportExtensionMain.swift",
+				"ShieldActionExtension/RespiteShieldActionExtension.swift",
+				"ShieldActionExtension/ShieldActionExtension.entitlements",
+				"ShieldActionExtension/ShieldActionIntentGateMatching.swift",
+				"ShieldConfigurationExtension/IntentGateShieldMatching.swift",
+				"ShieldConfigurationExtension/RespiteShieldConfigurationExtension.swift",
+				"ShieldConfigurationExtension/ShieldConfigurationExtension.entitlements",
+			);
+			target = 26F650C92F67407000E9FBC1 /* Respite 3.0 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		26F650CC2F67407000E9FBC1 /* Respite 3.0 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AA0000032F67407000E9FBC1 /* Exceptions for "Respite 3.0" folder in "Respite 3.0" target */,
+			);
 			path = "Respite 3.0";
 			sourceTree = "<group>";
 		};
@@ -87,27 +160,11 @@
 		};
 /* End PBXFrameworksBuildPhase section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		E90100052F67407000E9FBC1 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				E90100012F67407000E9FBC1 /* DeviceActivityReportExtension.appex in Embed App Extensions */,
-				E90100022F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex in Embed App Extensions */,
-				E90100032F67407000E9FBC1 /* ShieldConfigurationExtension.appex in Embed App Extensions */,
-				E90100042F67407000E9FBC1 /* ShieldActionExtension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXGroup section */
 		26F650C12F67407000E9FBC1 = {
 			isa = PBXGroup;
 			children = (
+				2682ED9F2F80589B00361DD6 /* DeviceActivityReportExtension-Info.plist */,
 				26F650CC2F67407000E9FBC1 /* Respite 3.0 */,
 				5F265577A4AB6ED4241B7E61 /* Respite 3.0/DeviceActivityReportExtension */,
 				E90100092F67407000E9FBC1 /* Respite 3.0/DeviceActivityMonitorExtension */,
@@ -166,6 +223,7 @@
 				F76D87719880420BE0AB693E /* Sources */,
 				814EA1329F8D9AC8A9EF9C8C /* Frameworks */,
 				9EE3A1F02846476A7F950081 /* Resources */,
+				2682EDA42F805C4A00361DD6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -188,6 +246,7 @@
 				E90200012F67407000E9FBC1 /* Sources */,
 				E90100102F67407000E9FBC1 /* Frameworks */,
 				E90200022F67407000E9FBC1 /* Resources */,
+				2682EDA52F805C9E00361DD6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -210,6 +269,7 @@
 				E90200032F67407000E9FBC1 /* Sources */,
 				E90100132F67407000E9FBC1 /* Frameworks */,
 				E90200042F67407000E9FBC1 /* Resources */,
+				AA0000012F67407000E9FBC1 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -232,6 +292,7 @@
 				E90200052F67407000E9FBC1 /* Sources */,
 				E90100162F67407000E9FBC1 /* Frameworks */,
 				E90200062F67407000E9FBC1 /* Resources */,
+				AA0000022F67407000E9FBC1 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -335,15 +396,83 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXSourcesBuildPhase section */
-		26F650C62F67407000E9FBC1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
+/* Begin PBXShellScriptBuildPhase section */
+		2682EDA42F805C4A00361DD6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PLIST=\"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Info.plist\"\n\n# Remove flat keys if they exist\n/usr/libexec/PlistBuddy -c \"Delete :NSExtensionPointIdentifier\" \"$PLIST\" 2>/dev/null\n/usr/libexec/PlistBuddy -c \"Delete :NSExtensionPrincipalClass\" \"$PLIST\" 2>/dev/null\n/usr/libexec/PlistBuddy -c \"Delete :NSExtension\" \"$PLIST\" 2>/dev/null\n\n# Add proper nested NSExtension dictionary\n/usr/libexec/PlistBuddy -c \"Add :NSExtension dict\" \"$PLIST\"\n/usr/libexec/PlistBuddy -c \"Add :NSExtension:NSExtensionPointIdentifier string 'com.apple.deviceactivity.report'\" \"$PLIST\"\n/usr/libexec/PlistBuddy -c \"Add :NSExtension:NSExtensionPrincipalClass string 'DeviceActivityReportExtension.DeviceActivityReportExtensionMain'\" \"$PLIST\"\n";
 		};
-		F76D87719880420BE0AB693E /* Sources */ = {
+		2682EDA52F805C9E00361DD6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PLIST=\"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Info.plist\"\n\n/usr/libexec/PlistBuddy -c \"Delete :NSExtensionPointIdentifier\" \"$PLIST\" 2>/dev/null\n/usr/libexec/PlistBuddy -c \"Delete :NSExtensionPrincipalClass\" \"$PLIST\" 2>/dev/null\n/usr/libexec/PlistBuddy -c \"Delete :NSExtension\" \"$PLIST\" 2>/dev/null\n\n/usr/libexec/PlistBuddy -c \"Add :NSExtension dict\" \"$PLIST\"\n/usr/libexec/PlistBuddy -c \"Add :NSExtension:NSExtensionPointIdentifier string 'com.apple.deviceactivity.monitor'\" \"$PLIST\"\n/usr/libexec/PlistBuddy -c \"Add :NSExtension:NSExtensionPrincipalClass string 'DeviceActivityMonitorExtension.DeviceActivityMonitorExtension'\" \"$PLIST\"\n";
+		};
+		AA0000012F67407000E9FBC1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PLIST=\"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Info.plist\"\n\n/usr/libexec/PlistBuddy -c \"Delete :NSExtensionPointIdentifier\" \"$PLIST\" 2>/dev/null\n/usr/libexec/PlistBuddy -c \"Delete :NSExtensionPrincipalClass\" \"$PLIST\" 2>/dev/null\n/usr/libexec/PlistBuddy -c \"Delete :NSExtension\" \"$PLIST\" 2>/dev/null\n\n/usr/libexec/PlistBuddy -c \"Add :NSExtension dict\" \"$PLIST\"\n/usr/libexec/PlistBuddy -c \"Add :NSExtension:NSExtensionPointIdentifier string 'com.apple.familycontrols.shield-configuration'\" \"$PLIST\"\n/usr/libexec/PlistBuddy -c \"Add :NSExtension:NSExtensionPrincipalClass string 'RespiteShieldConfigurationExtension'\" \"$PLIST\"\n";
+		};
+		AA0000022F67407000E9FBC1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PLIST=\"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Info.plist\"\n\n/usr/libexec/PlistBuddy -c \"Delete :NSExtensionPointIdentifier\" \"$PLIST\" 2>/dev/null\n/usr/libexec/PlistBuddy -c \"Delete :NSExtensionPrincipalClass\" \"$PLIST\" 2>/dev/null\n/usr/libexec/PlistBuddy -c \"Delete :NSExtension\" \"$PLIST\" 2>/dev/null\n\n/usr/libexec/PlistBuddy -c \"Add :NSExtension dict\" \"$PLIST\"\n/usr/libexec/PlistBuddy -c \"Add :NSExtension:NSExtensionPointIdentifier string 'com.apple.familycontrols.shield-action'\" \"$PLIST\"\n/usr/libexec/PlistBuddy -c \"Add :NSExtension:NSExtensionPrincipalClass string 'RespiteShieldActionExtension'\" \"$PLIST\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		26F650C62F67407000E9FBC1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -371,38 +500,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F76D87719880420BE0AB693E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXContainerItemProxy section */
-		E90100222F67407000E9FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 501D870E41296815F817F615;
-			remoteInfo = DeviceActivityReportExtension;
-		};
-		E90100242F67407000E9FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E901000C2F67407000E9FBC1;
-			remoteInfo = DeviceActivityMonitorExtension;
-		};
-		E90100262F67407000E9FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E901000D2F67407000E9FBC1;
-			remoteInfo = ShieldConfigurationExtension;
-		};
-		E90100282F67407000E9FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E901000E2F67407000E9FBC1;
-			remoteInfo = ShieldActionExtension;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXTargetDependency section */
 		E90100212F67407000E9FBC1 /* PBXTargetDependency */ = {
@@ -433,7 +538,8 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Respite 3.0/FamilyControls.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "DeviceActivityReportExtension-Info.plist";
 				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.deviceactivityui.report-extension";
 				INFOPLIST_KEY_NSExtensionPrincipalClass = "$(PRODUCT_MODULE_NAME).DeviceActivityReportExtensionMain";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
@@ -487,7 +593,7 @@
 				DEVELOPMENT_TEAM = TSH5D7226K;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -549,7 +655,7 @@
 				DEVELOPMENT_TEAM = TSH5D7226K;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -579,15 +685,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleURLTypes = (
-					{
-						CFBundleTypeRole = Editor;
-						CFBundleURLName = "com.stormforge.Respite.regulate";
-						CFBundleURLSchemes = (
-							regulate,
-						);
-					},
-				);
+				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Editor;\n    CFBundleURLName = \"com.stormforge.Respite.regulate\";\n    CFBundleURLSchemes =     (\n        regulate\n    );\n}";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -633,15 +731,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleURLTypes = (
-					{
-						CFBundleTypeRole = Editor;
-						CFBundleURLName = "com.stormforge.Respite.regulate";
-						CFBundleURLSchemes = (
-							regulate,
-						);
-					},
-				);
+				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Editor;\n    CFBundleURLName = \"com.stormforge.Respite.regulate\";\n    CFBundleURLSchemes =     (\n        regulate\n    );\n}";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -678,7 +768,8 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Respite 3.0/FamilyControls.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "DeviceActivityReportExtension-Info.plist";
 				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.deviceactivityui.report-extension";
 				INFOPLIST_KEY_NSExtensionPrincipalClass = "$(PRODUCT_MODULE_NAME).DeviceActivityReportExtensionMain";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
@@ -761,6 +852,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TSH5D7226K;
+				ENABLE_DEBUG_DYLIB = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.familycontrols.shield-configuration";
 				INFOPLIST_KEY_NSExtensionPrincipalClass = "$(PRODUCT_MODULE_NAME).RespiteShieldConfigurationExtension";
@@ -821,6 +913,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TSH5D7226K;
+				ENABLE_DEBUG_DYLIB = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.familycontrols.shield-action";
 				INFOPLIST_KEY_NSExtensionPrincipalClass = "$(PRODUCT_MODULE_NAME).RespiteShieldActionExtension";

@@ -19,6 +19,15 @@ final class InterventionManager: ObservableObject {
     /// Deep link from shield (`regulate://`) — full-screen regulation flow.
     @Published var regulationChallenge: RegulationChallenge? = nil
 
+    /// Deep link from TikTok shield (`regulate://intent`) — full-screen intent gate.
+    @Published var regulationIntentGate: Bool = false
+
+    /// Deep link `regulate://tiktok/options` — choose intent, puzzle, or breathwork for intent-gate apps.
+    @Published var showTikTokUnlockPicker: Bool = false
+
+    /// When true, completing puzzle/breathwork unlocks intent-gate apps (`TikTokShieldManager`), not daily-limit shields.
+    var regulationUnlocksTikTokOnly: Bool = false
+
     // MARK: - TikTok Intent Log
     @Published private(set) var intentLog: [IntentEntry] = []
 
@@ -43,12 +52,22 @@ final class InterventionManager: ObservableObject {
         showBreathwork = true
     }
 
-    func openRegulationChallenge(_ challenge: RegulationChallenge) {
+    func openRegulationChallenge(_ challenge: RegulationChallenge, unlocksTikTok: Bool = false) {
+        regulationUnlocksTikTokOnly = unlocksTikTok
         regulationChallenge = challenge
     }
 
     func clearRegulationChallenge() {
         regulationChallenge = nil
+        regulationUnlocksTikTokOnly = false
+    }
+
+    func openRegulationIntentGate() {
+        regulationIntentGate = true
+    }
+
+    func openTikTokUnlockPicker() {
+        showTikTokUnlockPicker = true
     }
 
     // MARK: - Logging
