@@ -84,6 +84,37 @@ enum RegulationMonitorShield {
         defaults.set(Date(), forKey: MonitorKeys.lastTikTokUsageAt)
     }
 
+    /// Stops and restarts TikTok usage monitoring so the 1-minute threshold can fire again,
+    /// giving us a heartbeat that keeps `lastTikTokUsageAt` fresh while the app is in use.
+    static func restartTikTokUsageMonitoring() {
+        let center = DeviceActivityCenter()
+        let activityName = DeviceActivityName("com.stormforge.Respite.tiktokUsage")
+        center.stopMonitoring([activityName])
+
+        let defaults = UserDefaults(suiteName: MonitorKeys.suite) ?? .standard
+        guard defaults.bool(forKey: MonitorKeys.tiktokIsUnlocked) else { return }
+        guard let data = defaults.data(forKey: MonitorKeys.tiktokSelectionData),
+              let tiktok = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data),
+              !tiktok.applicationTokens.isEmpty else { return }
+
+        let schedule = DeviceActivitySchedule(
+            intervalStart: DateComponents(hour: 0, minute: 0),
+            intervalEnd: DateComponents(hour: 23, minute: 59),
+            repeats: true
+        )
+        let event = DeviceActivityEvent(
+            applications: tiktok.applicationTokens,
+            categories: tiktok.categoryTokens,
+            webDomains: tiktok.webDomainTokens,
+            threshold: DateComponents(minute: 1)
+        )
+        try? center.startMonitoring(
+            activityName,
+            during: schedule,
+            events: [DeviceActivityEvent.Name("tiktokUsageThreshold"): event]
+        )
+    }
+
     static func applyShieldIfLocked() {
         let defaults = UserDefaults(suiteName: MonitorKeys.suite) ?? .standard
         if isInGraceWindow(defaults) {

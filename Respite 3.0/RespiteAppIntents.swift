@@ -20,23 +20,26 @@ private enum RespiteShortcutRunner {
 
 // MARK: - Intents (One Sec–style: use in Shortcuts → Automation → App → Is Opened)
 
-struct RespiteActivateCheckInIntent: AppIntent, ForegroundContinuableIntent {
+struct RespiteActivateCheckInIntent: AppIntent {
     static var title: LocalizedStringResource = "Activate Respite (check-in)"
     static var description = IntentDescription(
         "Opens Respite's check-in flow. Add this to Shortcuts → Automation → App → Is Opened for each app you want to pause before using."
     )
     static var openAppWhenRun: Bool = false
+    static var supportedModes: IntentModes = [.background, .foreground(.dynamic)]
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         if RespiteShortcutRunner.isSessionActive() {
             return .result(dialog: IntentDialog("Session active — enjoy your session."))
         }
-        throw needsToContinueInForegroundError("Opening Respite check-in…") {
-            let url = URL(string: "regulate://intent")!
-            RespiteShortcutDelivery.enqueue(url)
-            NotificationCenter.default.post(name: .respiteOpenRegulateURL, object: url)
+        do {
+            try await continueInForeground(alwaysConfirm: false)
+        } catch {
+            return .result(dialog: IntentDialog("Couldn't open Respite in the foreground."))
         }
+        await RespiteShortcutRunner.deliver(urlString: "regulate://intent")
+        return .result(dialog: IntentDialog("Opening Respite check-in…"))
     }
 }
 
@@ -65,9 +68,19 @@ struct RespiteIntentGatePuzzleIntent: AppIntent {
 struct RespiteIntentGateBreathworkIntent: AppIntent {
     static var title: LocalizedStringResource = "Respite — breathwork (intent gate)"
     static var description = IntentDescription("Starts breathwork for apps in Intent gate (unlocks after completion).")
-    static var openAppWhenRun: Bool = true
+    static var openAppWhenRun: Bool = false
+    static var supportedModes: IntentModes = [.background, .foreground(.dynamic)]
 
+    @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        if RespiteShortcutRunner.isSessionActive() {
+            return .result(dialog: IntentDialog("Session active — breathwork already completed for this session."))
+        }
+        do {
+            try await continueInForeground(alwaysConfirm: false)
+        } catch {
+            return .result(dialog: IntentDialog("Couldn't open Respite in the foreground."))
+        }
         await RespiteShortcutRunner.deliver(urlString: "regulate://tiktok/breathwork")
         return .result(dialog: IntentDialog("Opening breathwork."))
     }

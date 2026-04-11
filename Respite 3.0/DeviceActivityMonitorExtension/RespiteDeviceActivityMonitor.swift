@@ -23,6 +23,7 @@ final class RespiteDeviceActivityMonitor: DeviceActivityMonitor {
         super.eventDidReachThreshold(event, activity: activity)
         if activity.rawValue == tiktokUsageActivityId, event.rawValue == tiktokUsageThresholdId {
             RegulationMonitorShield.recordTikTokUsageNow()
+            RegulationMonitorShield.restartTikTokUsageMonitoring()
         }
         RegulationMonitorShield.applyShieldAfterThreshold()
     }
