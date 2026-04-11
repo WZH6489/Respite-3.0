@@ -6,13 +6,21 @@ struct TikTokShieldOptionsView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                Section {
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 14) {
+                    Text("Choose your pause")
+                        .font(.system(size: 30, weight: .semibold, design: .serif))
+                        .foregroundStyle(RespiteTheme.textPrimary)
+
+                    Text("Earn a temporary unlock with one mindful action.")
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .foregroundStyle(RespiteTheme.textSecondary)
+
                     optionRow(
                         title: "Check in",
                         subtitle: "Why are you opening this app?",
                         icon: "hand.raised.fill",
-                        tint: .orange
+                        tint: RespiteTheme.berryAccent
                     ) {
                         dismissThen {
                             interventions.openRegulationIntentGate()
@@ -23,7 +31,7 @@ struct TikTokShieldOptionsView: View {
                         title: "Puzzle",
                         subtitle: "Solve a quick math problem",
                         icon: "puzzlepiece.extension.fill",
-                        tint: .purple
+                        tint: RespiteTheme.sageDeep
                     ) {
                         dismissThen {
                             interventions.openRegulationChallenge(.puzzle, unlocksTikTok: true)
@@ -34,25 +42,29 @@ struct TikTokShieldOptionsView: View {
                         title: "Breathe",
                         subtitle: "4-7-8 breathing exercise",
                         icon: "wind",
-                        tint: .cyan
+                        tint: RespiteTheme.duskBlue
                     ) {
                         dismissThen {
                             interventions.openRegulationChallenge(.breathwork, unlocksTikTok: true)
                         }
                     }
-                } header: {
-                    Text("Earn a temporary unlock")
-                } footer: {
-                    Text("After you finish, the app unlocks for your grace period. If you still see “Restricted,” check Screen Time in Settings — that block is separate from Respite.")
+
+                    Text("After you finish, the app unlocks for your grace period.")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(RespiteTheme.textMuted)
+                        .padding(.top, 2)
                 }
+                .padding(.horizontal, 16)
+                .padding(.top, 12)
+                .padding(.bottom, 28)
             }
-            .navigationTitle("Continue")
-            .navigationBarTitleDisplayMode(.inline)
+            .background(RespiteTheme.appBackground.ignoresSafeArea())
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
                         interventions.showTikTokUnlockPicker = false
                     }
+                    .foregroundStyle(RespiteTheme.duskBlue)
                 }
             }
         }
@@ -70,25 +82,33 @@ struct TikTokShieldOptionsView: View {
                 Image(systemName: icon)
                     .font(.title3)
                     .foregroundStyle(tint)
-                    .frame(width: 36, height: 36)
-                    .background(tint.opacity(0.15))
-                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    .frame(width: 38, height: 38)
+                    .background(tint.opacity(0.16))
+                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 3) {
                     Text(title)
-                        .font(.body.weight(.semibold))
-                        .foregroundStyle(.primary)
+                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .foregroundStyle(RespiteTheme.textPrimary)
                     Text(subtitle)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .foregroundStyle(RespiteTheme.textMuted)
                 }
 
                 Spacer()
                 Image(systemName: "chevron.right")
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(RespiteTheme.textMuted)
             }
-            .padding(.vertical, 4)
+            .padding(16)
+            .background(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .fill(RespiteTheme.surface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .stroke(RespiteTheme.border, lineWidth: 1)
+                    )
+            )
         }
         .buttonStyle(.plain)
     }

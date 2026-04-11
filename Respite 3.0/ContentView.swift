@@ -69,6 +69,8 @@ struct ContentView: View {
                 isRegulationSession: true,
                 onComplete: {
                     TikTokShieldManager.shared.grantUnlockAfterCheckIn()
+                    let savedMinutes = max(1, RegulationSettingsStore().gracePeriodMinutes)
+                    DailyProgressStore.recordMinutesSaved(savedMinutes)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         returnToPreviousApp()
                     }
@@ -143,6 +145,8 @@ struct ContentView: View {
     /// Puzzle/breathwork from intent-gate apps unlock TikTok; from daily-limit apps unlock monitored selection.
     private func applyRegulationUnlock(unlocksTikTok: Bool) {
         let store = RegulationSettingsStore()
+        let savedMinutes = max(1, store.gracePeriodMinutes)
+        DailyProgressStore.recordMinutesSaved(savedMinutes)
         if unlocksTikTok {
             TikTokShieldManager.shared.grantUnlockAfterCheckIn()
         } else {
@@ -153,5 +157,47 @@ struct ContentView: View {
     /// Sends the user back to the app they came from by briefly suspending to the home screen.
     private func returnToPreviousApp() {
         UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+    }
+}
+
+enum RespiteTheme {
+    static let textPrimary = Color(red: 0.13, green: 0.20, blue: 0.17)
+    static let textSecondary = Color(red: 0.35, green: 0.45, blue: 0.40)
+    static let textMuted = Color(red: 0.46, green: 0.55, blue: 0.50)
+
+    static let sageLight = Color(red: 0.79, green: 0.87, blue: 0.70)
+    static let sageMid = Color(red: 0.66, green: 0.78, blue: 0.59)
+    static let sageDeep = Color(red: 0.50, green: 0.65, blue: 0.52)
+    static let pine = Color(red: 0.42, green: 0.57, blue: 0.45)
+
+    static let mistBlue = Color(red: 0.52, green: 0.72, blue: 0.77)
+    static let duskBlue = Color(red: 0.43, green: 0.60, blue: 0.67)
+    static let berryAccent = Color(red: 0.69, green: 0.49, blue: 0.62)
+
+    static let surface = Color(red: 0.97, green: 0.98, blue: 0.96)
+    static let surfaceSoft = Color(red: 0.95, green: 0.97, blue: 0.94)
+    static let border = Color(red: 0.82, green: 0.88, blue: 0.84)
+
+    static var appBackground: LinearGradient {
+        LinearGradient(
+            colors: [
+                Color(red: 0.91, green: 0.94, blue: 0.90),
+                Color(red: 0.95, green: 0.97, blue: 0.94),
+                Color(red: 0.94, green: 0.97, blue: 0.97)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    static var quoteGradient: LinearGradient {
+        LinearGradient(
+            colors: [
+                Color(red: 0.93, green: 0.97, blue: 0.92),
+                Color(red: 0.89, green: 0.95, blue: 0.97)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
     }
 }

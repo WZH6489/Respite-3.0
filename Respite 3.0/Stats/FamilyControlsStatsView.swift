@@ -6,21 +6,22 @@ struct FamilyControlsStatsView: View {
     @State private var authorizationStatus = AuthorizationCenter.shared.authorizationStatus
     @State private var didAttemptAuthorization = false
     @State private var requestErrorMessage: String?
-
     @State private var reportContext: DeviceActivityReport.Context = .respiteBarGraph
 
+    private let settings = RegulationSettingsStore()
+
     private var weekInterval: DateInterval {
-        Calendar.current.dateInterval(of: .weekOfYear, for: .now) ?? DateInterval(start: .now, duration: 7 * 24 * 60 * 60)
+        let calendar = Calendar.current
+        let startOfToday = calendar.startOfDay(for: .now)
+        let start = calendar.date(byAdding: .day, value: -6, to: startOfToday) ?? startOfToday
+        return DateInterval(start: start, end: .now)
     }
 
     private var deviceActivityFilter: DeviceActivityFilter {
         DeviceActivityFilter(
             segment: .daily(during: weekInterval),
-            // This SDK only exposes `.children` and `.all` for DeviceActivityFilter.Users.
-            // Use `.all` to include the user's own authorized activity.
             users: .all,
             devices: .init([.iPhone, .iPad]),
-            // Empty sets mean "no token filtering" in this SDK.
             applications: [],
             categories: [],
             webDomains: []
@@ -29,107 +30,169 @@ struct FamilyControlsStatsView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
-                    header
-
+                    titleBlock
+                    summaryGrid
+                    accessCard
                     if authorizationStatus == .approved {
-                        Picker("Chart", selection: $reportContext) {
-                            Text("Bar Graph").tag(DeviceActivityReport.Context.respiteBarGraph)
-                            Text("Pie Chart").tag(DeviceActivityReport.Context.respitePieChart)
-                        }
-                        .pickerStyle(.segmented)
-
-                        // DeviceActivityReport is a privacy-preserving report rendered by
-                        // the app's Device Activity Report Extension.
-                        DeviceActivityReport(reportContext, filter: deviceActivityFilter)
-                            .frame(maxWidth: .infinity)
+                        chartCard
                     }
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 12)
-                .padding(.bottom, 32)
+                .padding(.bottom, 28)
             }
-            .navigationTitle("Stats")
+            .background(RespiteTheme.appBackground.ignoresSafeArea())
+            .toolbar(.hidden, for: .navigationBar)
         }
         .onReceive(AuthorizationCenter.shared.$authorizationStatus) { newStatus in
             authorizationStatus = newStatus
         }
         .task {
-            // Request authorization on first launch (or after external changes).
             guard !didAttemptAuthorization else { return }
             didAttemptAuthorization = true
             await ensureAuthorization()
         }
     }
 
+    private var titleBlock: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Your weekly rhythm")
+                .font(.system(size: 30, weight: .semibold, design: .serif))
+                .foregroundStyle(RespiteTheme.textPrimary)
+            Text("A calm overview of progress and protection.")
+                .font(.system(size: 14, weight: .medium, design: .rounded))
+                .foregroundStyle(RespiteTheme.textSecondary)
+        }
+    }
+
+    private var summaryGrid: some View {
+        HStack(spacing: 12) {
+            statTile(title: "Saved today", value: "\(DailyProgressStore.minutesSavedToday())m", caption: "From completed interventions")
+            statTile(title: "Apps blocked", value: "\(blockedAppsCount)", caption: "Daily \(dailyLimitAppsCount) · Gate \(intentGateAppsCount)")
+        }
+    }
+
+    private func statTile(title: String, value: String, caption: String) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(RespiteTheme.textSecondary)
+            Text(value)
+                .font(.system(size: 30, weight: .semibold, design: .rounded))
+                .foregroundStyle(RespiteTheme.textPrimary)
+            Text(caption)
+                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .foregroundStyle(RespiteTheme.textMuted)
+                .lineLimit(2)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, minHeight: 122, alignment: .topLeading)
+        .background(cardBackground)
+    }
+
     @ViewBuilder
-    private var header: some View {
-        switch authorizationStatus {
-        case .notDetermined:
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Family Controls isn’t enabled yet.")
+    private var accessCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            switch authorizationStatus {
+            case .notDetermined:
+                Text("Family Controls is not enabled yet.")
                     .font(.headline)
-                Text("Enable access to show your weekly app and category stats.")
-                    .foregroundStyle(.secondary)
-
-                Button {
+                    .foregroundStyle(RespiteTheme.textPrimary)
+                Text("Enable access to render app and category activity.")
+                    .foregroundStyle(RespiteTheme.textSecondary)
+                actionButton(title: "Enable Family Controls") {
                     Task { await requestAuthorization() }
-                } label: {
-                    Text("Enable Family Controls")
-                        .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.blue)
-            }
 
-        case .denied:
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Family Controls access was denied.")
+            case .denied:
+                Text("Family Controls access is unavailable.")
                     .font(.headline)
-                Text("You may be able to request authorization again from here.")
-                    .foregroundStyle(.secondary)
-
+                    .foregroundStyle(RespiteTheme.textPrimary)
+                Text("Review Screen Time permissions and try again.")
+                    .foregroundStyle(RespiteTheme.textSecondary)
                 if let requestErrorMessage {
                     Text(requestErrorMessage)
                         .font(.footnote)
                         .foregroundStyle(.red)
                 }
-
-                Button {
+                actionButton(title: "Request Again") {
                     Task { await requestAuthorization() }
-                } label: {
-                    Text("Request Again")
-                        .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.bordered)
-            }
 
-        case .approved:
-            VStack(alignment: .leading, spacing: 6) {
+            case .approved:
                 Text("Family Controls enabled.")
                     .font(.headline)
-                Text("Loading your weekly stats.")
-                    .foregroundStyle(.secondary)
-            }
+                    .foregroundStyle(RespiteTheme.textPrimary)
+                Text("Showing the last 7 days of app activity.")
+                    .foregroundStyle(RespiteTheme.textSecondary)
 
-        @unknown default:
-            VStack(alignment: .leading, spacing: 8) {
+            default:
                 Text("Family Controls status updated.")
                     .font(.headline)
-                Text("Please refresh authorization to continue.")
-                    .foregroundStyle(.secondary)
-
-                Button {
+                    .foregroundStyle(RespiteTheme.textPrimary)
+                actionButton(title: "Refresh Authorization") {
                     Task { await requestAuthorization() }
-                } label: {
-                    Text("Refresh Authorization")
-                        .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.bordered)
             }
-
         }
+        .padding(16)
+        .background(cardBackground)
+    }
+
+    private var chartCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Picker("Chart", selection: $reportContext) {
+                Text("Bar Graph").tag(DeviceActivityReport.Context.respiteBarGraph)
+                Text("Pie Chart").tag(DeviceActivityReport.Context.respitePieChart)
+            }
+            .pickerStyle(.segmented)
+            .tint(RespiteTheme.duskBlue)
+
+            DeviceActivityReport(reportContext, filter: deviceActivityFilter)
+                .frame(maxWidth: .infinity, minHeight: 380, alignment: .top)
+
+            Text("If this looks empty, open the selected apps first so iOS can collect activity samples.")
+                .font(.footnote)
+                .foregroundStyle(RespiteTheme.textMuted)
+        }
+        .padding(16)
+        .background(cardBackground)
+    }
+
+    private func actionButton(title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+        }
+        .buttonStyle(.borderedProminent)
+        .tint(RespiteTheme.duskBlue)
+    }
+
+    private var cardBackground: some View {
+        RoundedRectangle(cornerRadius: 20, style: .continuous)
+            .fill(RespiteTheme.surface)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(RespiteTheme.border, lineWidth: 1)
+            )
+    }
+
+    private var blockedAppsCount: Int {
+        let dailyApps = settings.loadSelection()?.applicationTokens ?? []
+        let intentApps = settings.loadTikTokSelection()?.applicationTokens ?? []
+        return dailyApps.union(intentApps).count
+    }
+
+    private var dailyLimitAppsCount: Int {
+        (settings.loadSelection()?.applicationTokens.count) ?? 0
+    }
+
+    private var intentGateAppsCount: Int {
+        (settings.loadTikTokSelection()?.applicationTokens.count) ?? 0
     }
 
     private func ensureAuthorization() async {
@@ -145,12 +208,9 @@ struct FamilyControlsStatsView: View {
             requestErrorMessage = error.localizedDescription
         }
     }
-
 }
 
 private extension DeviceActivityReport.Context {
-    // These raw-values must match the extension's supported contexts.
     static let respiteBarGraph = Self("Respite Bar Graph")
     static let respitePieChart = Self("Respite Pie Chart")
 }
-

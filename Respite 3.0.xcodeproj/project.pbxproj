@@ -74,18 +74,15 @@
 		AA0000032F67407000E9FBC1 /* Exceptions for "Respite 3.0" folder in "Respite 3.0" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"DeviceActivityMonitorExtension/DeviceActivityMonitorExtension.entitlements",
-				"DeviceActivityMonitorExtension/RegulationMonitorSupport.swift",
-				"DeviceActivityMonitorExtension/RespiteDeviceActivityMonitor.swift",
-				"DeviceActivityReportExtension/ActivityBreakdownReport.swift",
-				"DeviceActivityReportExtension/ActivityBreakdownView.swift",
-				"DeviceActivityReportExtension/DeviceActivityReportExtensionMain.swift",
-				"ShieldActionExtension/RespiteShieldActionExtension.swift",
-				"ShieldActionExtension/ShieldActionExtension.entitlements",
-				"ShieldActionExtension/ShieldActionIntentGateMatching.swift",
-				"ShieldConfigurationExtension/IntentGateShieldMatching.swift",
-				"ShieldConfigurationExtension/RespiteShieldConfigurationExtension.swift",
-				"ShieldConfigurationExtension/ShieldConfigurationExtension.entitlements",
+				DeviceActivityMonitorExtension/RegulationMonitorSupport.swift,
+				DeviceActivityMonitorExtension/RespiteDeviceActivityMonitor.swift,
+				DeviceActivityReportExtension/ActivityBreakdownReport.swift,
+				DeviceActivityReportExtension/ActivityBreakdownView.swift,
+				DeviceActivityReportExtension/DeviceActivityReportExtensionMain.swift,
+				ShieldActionExtension/RespiteShieldActionExtension.swift,
+				ShieldActionExtension/ShieldActionIntentGateMatching.swift,
+				ShieldConfigurationExtension/IntentGateShieldMatching.swift,
+				ShieldConfigurationExtension/RespiteShieldConfigurationExtension.swift,
 			);
 			target = 26F650C92F67407000E9FBC1 /* Respite 3.0 */;
 		};
