@@ -5,6 +5,7 @@ struct PuzzleBreakView: View {
     @Binding var isPresented: Bool
     var isRegulationSession: Bool = false
     var onSuccessfulSolve: (() -> Void)? = nil
+    var onRegulationLeaveFlow: (() -> Void)? = nil
 
     @State private var puzzle: MathPuzzle = .random()
     @State private var userAnswer: String = ""
@@ -36,7 +37,10 @@ struct PuzzleBreakView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     if phase == .correct || phase == .failed {
-                        Button("Done") { isPresented = false }
+                        Button("Done") {
+                            if isRegulationSession, phase == .correct { onRegulationLeaveFlow?() }
+                            isPresented = false
+                        }
                     }
                 }
             }
@@ -67,9 +71,9 @@ struct PuzzleBreakView: View {
                 .font(.footnote)
                 .foregroundStyle(.secondary)
             Button {
-                if let url = URL(string: "tiktok://") {
-                    UIApplication.shared.open(url)
-                }
+                onRegulationLeaveFlow?()
+                isPresented = false
+                openTikTokAfterDismissal()
             } label: {
                 Label("Open TikTok", systemImage: "arrow.up.right.square")
                     .font(.headline)
@@ -294,6 +298,16 @@ struct PuzzleBreakView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             withAnimation(.interpolatingSpring(stiffness: 600, damping: 10)) {
                 shakeOffset = 0
+            }
+        }
+    }
+
+    private func openTikTokAfterDismissal() {
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(350))
+            if let url = URL(string: "tiktok://") {
+                RegulationSettingsStore().armTikTokHandoffSuppressWindow()
+                UIApplication.shared.open(url)
             }
         }
     }

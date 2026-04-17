@@ -6,14 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXFileReference section */
-		26F650CA2F67407000E9FBC1 /* Respite 3.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Respite 3.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C4CED61CC5E362FB3FD022C /* DeviceActivityReportExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeviceActivityReportExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		E90100062F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeviceActivityMonitorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		E90100072F67407000E9FBC1 /* ShieldConfigurationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShieldConfigurationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		E90100082F67407000E9FBC1 /* ShieldActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShieldActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-/* End PBXFileReference section */
-
 /* Begin PBXBuildFile section */
 		E90100012F67407000E9FBC1 /* DeviceActivityReportExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7C4CED61CC5E362FB3FD022C /* DeviceActivityReportExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E90100022F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E90100062F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -21,30 +13,85 @@
 		E90100042F67407000E9FBC1 /* ShieldActionExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E90100082F67407000E9FBC1 /* ShieldActionExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E90100222F67407000E9FBC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 501D870E41296815F817F615;
+			remoteInfo = DeviceActivityReportExtension;
+		};
+		E90100242F67407000E9FBC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E901000C2F67407000E9FBC1;
+			remoteInfo = DeviceActivityMonitorExtension;
+		};
+		E90100262F67407000E9FBC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E901000D2F67407000E9FBC1;
+			remoteInfo = ShieldConfigurationExtension;
+		};
+		E90100282F67407000E9FBC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E901000E2F67407000E9FBC1;
+			remoteInfo = ShieldActionExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E90100052F67407000E9FBC1 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E90100012F67407000E9FBC1 /* DeviceActivityReportExtension.appex in Embed App Extensions */,
+				E90100022F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex in Embed App Extensions */,
+				E90100032F67407000E9FBC1 /* ShieldConfigurationExtension.appex in Embed App Extensions */,
+				E90100042F67407000E9FBC1 /* ShieldActionExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		26F650CA2F67407000E9FBC1 /* Respite 3.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Respite 3.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C4CED61CC5E362FB3FD022C /* DeviceActivityReportExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = DeviceActivityReportExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E90100062F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeviceActivityMonitorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E90100072F67407000E9FBC1 /* ShieldConfigurationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShieldConfigurationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E90100082F67407000E9FBC1 /* ShieldActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShieldActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		BB110002AACCDD0011223344 /* Exceptions for "DeviceActivityReportExtension" folder in "DeviceActivityReportExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"DeviceActivityReportExtension.entitlements",
+				Info.plist,
+			);
+			target = 501D870E41296815F817F615 /* DeviceActivityReportExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		26F650CC2F67407000E9FBC1 /* Respite 3.0 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Respite 3.0";
 			sourceTree = "<group>";
 		};
-		5F265577A4AB6ED4241B7E61 /* Respite 3.0/DeviceActivityReportExtension */ = {
+		BB110001AACCDD0011223344 /* DeviceActivityReportExtension */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Respite 3.0/DeviceActivityReportExtension";
-			sourceTree = "<group>";
-		};
-		E90100092F67407000E9FBC1 /* Respite 3.0/DeviceActivityMonitorExtension */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Respite 3.0/DeviceActivityMonitorExtension";
-			sourceTree = "<group>";
-		};
-		E901000A2F67407000E9FBC1 /* Respite 3.0/ShieldConfigurationExtension */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Respite 3.0/ShieldConfigurationExtension";
-			sourceTree = "<group>";
-		};
-		E901000B2F67407000E9FBC1 /* Respite 3.0/ShieldActionExtension */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Respite 3.0/ShieldActionExtension";
+			exceptions = (
+				BB110002AACCDD0011223344 /* Exceptions for "DeviceActivityReportExtension" folder in "DeviceActivityReportExtension" target */,
+			);
+			path = DeviceActivityReportExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -87,32 +134,12 @@
 		};
 /* End PBXFrameworksBuildPhase section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		E90100052F67407000E9FBC1 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				E90100012F67407000E9FBC1 /* DeviceActivityReportExtension.appex in Embed App Extensions */,
-				E90100022F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex in Embed App Extensions */,
-				E90100032F67407000E9FBC1 /* ShieldConfigurationExtension.appex in Embed App Extensions */,
-				E90100042F67407000E9FBC1 /* ShieldActionExtension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXGroup section */
 		26F650C12F67407000E9FBC1 = {
 			isa = PBXGroup;
 			children = (
 				26F650CC2F67407000E9FBC1 /* Respite 3.0 */,
-				5F265577A4AB6ED4241B7E61 /* Respite 3.0/DeviceActivityReportExtension */,
-				E90100092F67407000E9FBC1 /* Respite 3.0/DeviceActivityMonitorExtension */,
-				E901000A2F67407000E9FBC1 /* Respite 3.0/ShieldConfigurationExtension */,
-				E901000B2F67407000E9FBC1 /* Respite 3.0/ShieldActionExtension */,
+				BB110001AACCDD0011223344 /* DeviceActivityReportExtension */,
 				26F650CB2F67407000E9FBC1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -151,6 +178,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				26F650CC2F67407000E9FBC1 /* Respite 3.0 */,
+				BB110001AACCDD0011223344 /* DeviceActivityReportExtension */,
 			);
 			name = "Respite 3.0";
 			packageProductDependencies = (
@@ -171,10 +199,10 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				5F265577A4AB6ED4241B7E61 /* Respite 3.0/DeviceActivityReportExtension */,
-			);
 			name = DeviceActivityReportExtension;
+			fileSystemSynchronizedGroups = (
+				BB110001AACCDD0011223344 /* DeviceActivityReportExtension */,
+			);
 			packageProductDependencies = (
 			);
 			productName = DeviceActivityReportExtension;
@@ -192,9 +220,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				E90100092F67407000E9FBC1 /* Respite 3.0/DeviceActivityMonitorExtension */,
 			);
 			name = DeviceActivityMonitorExtension;
 			packageProductDependencies = (
@@ -215,9 +240,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				E901000A2F67407000E9FBC1 /* Respite 3.0/ShieldConfigurationExtension */,
-			);
 			name = ShieldConfigurationExtension;
 			packageProductDependencies = (
 			);
@@ -236,9 +258,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				E901000B2F67407000E9FBC1 /* Respite 3.0/ShieldActionExtension */,
 			);
 			name = ShieldActionExtension;
 			packageProductDependencies = (
@@ -343,13 +362,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F76D87719880420BE0AB693E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E90200012F67407000E9FBC1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -371,38 +383,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F76D87719880420BE0AB693E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXContainerItemProxy section */
-		E90100222F67407000E9FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 501D870E41296815F817F615;
-			remoteInfo = DeviceActivityReportExtension;
-		};
-		E90100242F67407000E9FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E901000C2F67407000E9FBC1;
-			remoteInfo = DeviceActivityMonitorExtension;
-		};
-		E90100262F67407000E9FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E901000D2F67407000E9FBC1;
-			remoteInfo = ShieldConfigurationExtension;
-		};
-		E90100282F67407000E9FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E901000E2F67407000E9FBC1;
-			remoteInfo = ShieldActionExtension;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXTargetDependency section */
 		E90100212F67407000E9FBC1 /* PBXTargetDependency */ = {
@@ -431,22 +419,33 @@
 		0BB0BE92AE1DFCAF688FF19E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Respite 3.0/FamilyControls.entitlements";
+				CODE_SIGN_ENTITLEMENTS = DeviceActivityReportExtension/DeviceActivityReportExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TSH5D7226K;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.deviceactivityui.report-extension";
-				INFOPLIST_KEY_NSExtensionPrincipalClass = "$(PRODUCT_MODULE_NAME).DeviceActivityReportExtensionMain";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				INFOPLIST_FILE = DeviceActivityReportExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DeviceActivityReportExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0.DeviceActivityReportExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = appex;
 			};
+			name = Debug;
+		};
 			name = Debug;
 		};
 		26F650D32F67407100E9FBC1 /* Debug */ = {
@@ -506,6 +505,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -561,6 +561,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -579,15 +580,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleURLTypes = (
-					{
-						CFBundleTypeRole = Editor;
-						CFBundleURLName = "com.stormforge.Respite.regulate";
-						CFBundleURLSchemes = (
-							regulate,
-						);
-					},
-				);
+				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Editor;\n    CFBundleURLName = \"com.stormforge.Respite.regulate\";\n    CFBundleURLSchemes =     (\n        regulate\n    );\n}";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -608,7 +601,7 @@
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -633,15 +626,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleURLTypes = (
-					{
-						CFBundleTypeRole = Editor;
-						CFBundleURLName = "com.stormforge.Respite.regulate";
-						CFBundleURLSchemes = (
-							regulate,
-						);
-					},
-				);
+				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Editor;\n    CFBundleURLName = \"com.stormforge.Respite.regulate\";\n    CFBundleURLSchemes =     (\n        regulate\n    );\n}";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -662,7 +647,7 @@
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -676,22 +661,34 @@
 		76209DE0A80EBEAF978CF53F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Respite 3.0/FamilyControls.entitlements";
+				CODE_SIGN_ENTITLEMENTS = DeviceActivityReportExtension/DeviceActivityReportExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TSH5D7226K;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.deviceactivityui.report-extension";
-				INFOPLIST_KEY_NSExtensionPrincipalClass = "$(PRODUCT_MODULE_NAME).DeviceActivityReportExtensionMain";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				INFOPLIST_FILE = DeviceActivityReportExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DeviceActivityReportExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0.DeviceActivityReportExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = appex;
+				VALIDATE_PRODUCT = YES;
 			};
+			name = Release;
+		};
 			name = Release;
 		};
 		E90300182F67407000E9FBC1 /* Debug */ = {
@@ -711,7 +708,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0.DeviceActivityMonitorExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -741,7 +738,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0.DeviceActivityMonitorExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -771,7 +768,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0.ShieldConfigurationExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -801,7 +798,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0.ShieldConfigurationExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -831,7 +828,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0.ShieldActionExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -861,7 +858,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0.ShieldActionExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

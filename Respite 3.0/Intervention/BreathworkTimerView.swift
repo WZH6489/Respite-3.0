@@ -5,6 +5,8 @@ struct BreathworkTimerView: View {
     @Binding var isPresented: Bool
     var isRegulationSession: Bool = false
     var onRegulationComplete: (() -> Void)? = nil
+    /// After a regulation session, called when leaving so duplicate `regulate://breathwork` URLs are ignored briefly.
+    var onRegulationLeaveFlow: (() -> Void)? = nil
 
     @State private var breathPhase: BreathPhase = .ready
     @State private var countdown: Int = 0
@@ -90,6 +92,9 @@ struct BreathworkTimerView: View {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Close") {
                         stopTimer()
+                        if isRegulationSession, breathPhase == .done || showTikTokNudge {
+                            onRegulationLeaveFlow?()
+                        }
                         isPresented = false
                     }
                     .foregroundStyle(.secondary)
@@ -113,9 +118,10 @@ struct BreathworkTimerView: View {
                 .font(.footnote)
                 .foregroundStyle(.secondary)
             Button {
-                if let url = URL(string: "tiktok://") {
-                    UIApplication.shared.open(url)
-                }
+                onRegulationLeaveFlow?()
+                stopTimer()
+                isPresented = false
+                openTikTokAfterDismissal()
             } label: {
                 Label("Open TikTok", systemImage: "arrow.up.right.square")
                     .font(.headline)
@@ -264,7 +270,11 @@ struct BreathworkTimerView: View {
                                 .background(RoundedRectangle(cornerRadius: 14).fill(Color.green))
                         }
                     }
-                    Button { isPresented = false } label: {
+                    Button {
+                        if isRegulationSession { onRegulationLeaveFlow?() }
+                        stopTimer()
+                        isPresented = false
+                    } label: {
                         Text("I'm done")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
@@ -345,6 +355,16 @@ struct BreathworkTimerView: View {
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
+    }
+
+    private func openTikTokAfterDismissal() {
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(350))
+            if let url = URL(string: "tiktok://") {
+                RegulationSettingsStore().armTikTokHandoffSuppressWindow()
+                UIApplication.shared.open(url)
+            }
+        }
     }
 }
 

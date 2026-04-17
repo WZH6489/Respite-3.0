@@ -4,6 +4,11 @@ import FamilyControls
 import Foundation
 import ManagedSettings
 
+extension Notification.Name {
+    /// Posted when the grace timer fires while the app may be foregrounded (user still in session).
+    static let respiteGraceDidExpire = Notification.Name("respiteGraceDidExpire")
+}
+
 @MainActor
 final class ShieldManager: ObservableObject {
     static let shared = ShieldManager()
@@ -39,15 +44,20 @@ final class ShieldManager: ObservableObject {
         scheduleGraceRelock()
     }
 
-    func checkGraceExpired() {
-        guard settings.isUnlocked, let expires = settings.unlockExpiresAt else { return }
-        if Date() >= expires {
-            settings.isUnlocked = false
-            settings.unlockExpiresAt = nil
-            applyShield()
-            graceTimer?.invalidate()
-            graceTimer = nil
+    /// - Returns: `true` if grace just ended during this call.
+    @discardableResult
+    func checkGraceExpired(fromScheduledTimer: Bool = false) -> Bool {
+        guard settings.isUnlocked, let expires = settings.unlockExpiresAt else { return false }
+        guard Date() >= expires else { return false }
+        settings.isUnlocked = false
+        settings.unlockExpiresAt = nil
+        applyShield()
+        graceTimer?.invalidate()
+        graceTimer = nil
+        if fromScheduledTimer {
+            NotificationCenter.default.post(name: .respiteGraceDidExpire, object: nil)
         }
+        return true
     }
 
     private func scheduleGraceRelock() {
@@ -55,12 +65,12 @@ final class ShieldManager: ObservableObject {
         guard let expires = settings.unlockExpiresAt else { return }
         let interval = expires.timeIntervalSinceNow
         guard interval > 0 else {
-            checkGraceExpired()
+            _ = checkGraceExpired(fromScheduledTimer: false)
             return
         }
         graceTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { [weak self] _ in
             Task { @MainActor in
-                self?.checkGraceExpired()
+                _ = self?.checkGraceExpired(fromScheduledTimer: true)
             }
         }
         RunLoop.main.add(graceTimer!, forMode: .common)

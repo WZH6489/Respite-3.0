@@ -31,6 +31,8 @@ struct FamilyControlsStatsView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
+                    RespiteInterventionChartsSection()
+
                     header
 
                     if authorizationStatus == .approved {

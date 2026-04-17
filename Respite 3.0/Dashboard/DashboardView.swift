@@ -9,11 +9,11 @@ struct DashboardView: View {
                 VStack(spacing: 20) {
                     interventionCard(
                         icon: "logo.tiktok",
-                        systemIcon: "play.rectangle.fill",
-                        title: "TikTok Intent Check",
-                        description: "Reflect on why you're opening TikTok before you dive in.",
+                        systemIcon: "wind",
+                        title: "Breathing gate",
+                        description: "Five slow breaths (2s in, 3s out) — the same flow as Screen Time and idle prompts.",
                         accentColor: .black,
-                        action: { interventions.triggerTikTokGate() }
+                        action: { interventions.presentBreathingGate(.externalLaunch) }
                     )
 
                     interventionCard(
@@ -23,15 +23,6 @@ struct DashboardView: View {
                         description: "Solve a quick math puzzle to engage your brain instead of scrolling.",
                         accentColor: .purple,
                         action: { interventions.triggerPuzzleBreak() }
-                    )
-
-                    interventionCard(
-                        icon: "💨",
-                        systemIcon: nil,
-                        title: "Breathwork Timer",
-                        description: "4-7-8 breathing: three guided cycles to reset your nervous system.",
-                        accentColor: .cyan,
-                        action: { interventions.triggerBreathwork() }
                     )
                 }
                 .padding(.horizontal, 16)
