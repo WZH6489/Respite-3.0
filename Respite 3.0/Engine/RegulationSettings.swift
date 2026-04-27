@@ -12,6 +12,8 @@ enum RegulationUserDefaultsKey {
     static let unlockExpiresAt = "regulation.unlockExpiresAt"
     static let pauseThresholdMinutes = "regulation.pauseThresholdMinutes"
     static let gracePeriodMinutes = "regulation.gracePeriodMinutes"
+    static let streakGoalMinutes = "regulation.streakGoalMinutes"
+    static let dailyLimitTriggered = "regulation.dailyLimitTriggered"
     // TikTok intent gate
     static let tiktokSelectionData = "regulation.tiktokSelectionData"
     static let tiktokIsUnlocked = "regulation.tiktokIsUnlocked"
@@ -59,9 +61,22 @@ final class RegulationSettingsStore {
         set { defaults.set(newValue, forKey: RegulationUserDefaultsKey.gracePeriodMinutes) }
     }
 
+    var streakGoalMinutes: Int {
+        get {
+            let v = defaults.integer(forKey: RegulationUserDefaultsKey.streakGoalMinutes)
+            return v > 0 ? v : 30
+        }
+        set { defaults.set(max(1, newValue), forKey: RegulationUserDefaultsKey.streakGoalMinutes) }
+    }
+
     var isUnlocked: Bool {
         get { defaults.bool(forKey: RegulationUserDefaultsKey.isUnlocked) }
         set { defaults.set(newValue, forKey: RegulationUserDefaultsKey.isUnlocked) }
+    }
+
+    var dailyLimitTriggered: Bool {
+        get { defaults.bool(forKey: RegulationUserDefaultsKey.dailyLimitTriggered) }
+        set { defaults.set(newValue, forKey: RegulationUserDefaultsKey.dailyLimitTriggered) }
     }
 
     var unlockExpiresAt: Date? {

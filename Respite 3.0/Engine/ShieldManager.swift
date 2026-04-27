@@ -40,33 +40,36 @@ final class ShieldManager: ObservableObject {
         let monitored = settings.loadSelection()
         let tiktokSel = settings.loadTikTokSelection()
 
-        let monitoredApps = monitored?.applicationTokens ?? []
-        let tiktokApps = tiktokSel?.applicationTokens ?? []
-        var apps = monitoredApps.union(tiktokApps)
+        // Daily-limit targets should only be shielded after threshold is reached.
+        let monitoredApps = settings.dailyLimitTriggered ? (monitored?.applicationTokens ?? []) : []
+        let intentApps = tiktokSel?.applicationTokens ?? []
+        var apps = monitoredApps.union(intentApps)
 
-        let hasCategories = !(monitored?.categoryTokens.isEmpty ?? true)
-        let hasWeb = !(monitored?.webDomainTokens.isEmpty ?? true)
+        let monitoredCategories = settings.dailyLimitTriggered ? (monitored?.categoryTokens ?? []) : []
+        let intentCategories = tiktokSel?.categoryTokens ?? []
+        var categories = monitoredCategories.union(intentCategories)
+
+        let monitoredWeb = settings.dailyLimitTriggered ? (monitored?.webDomainTokens ?? []) : []
+        let intentWeb = tiktokSel?.webDomainTokens ?? []
+        var webDomains = monitoredWeb.union(intentWeb)
+
+        let hasCategories = !categories.isEmpty
+        let hasWeb = !webDomains.isEmpty
         if apps.isEmpty && !hasCategories && !hasWeb {
             releaseShield()
             return
         }
 
-        // Intent gate: stay unshielded until idle (no usage for N minutes) — see `TikTokIdleLogic`.
+        // Intent gate: stay unshielded until idle (no usage for N minutes) — applies to all intent-gate targets.
         if TikTokIdleLogic.shouldTikTokStayUnshielded(settings: settings) {
-            apps = apps.subtracting(tiktokApps)
+            apps = apps.subtracting(intentApps)
+            categories = categories.subtracting(intentCategories)
+            webDomains = webDomains.subtracting(intentWeb)
         }
 
         store.shield.applications = apps.isEmpty ? nil : apps
-        if let monitored, !monitored.categoryTokens.isEmpty {
-            store.shield.applicationCategories = .specific(monitored.categoryTokens)
-        } else {
-            store.shield.applicationCategories = nil
-        }
-        if let monitored, !monitored.webDomainTokens.isEmpty {
-            store.shield.webDomains = monitored.webDomainTokens
-        } else {
-            store.shield.webDomains = nil
-        }
+        store.shield.applicationCategories = categories.isEmpty ? nil : .specific(categories)
+        store.shield.webDomains = webDomains.isEmpty ? nil : webDomains
     }
 
     /// Backwards-compatible name used by grace expiry paths.
@@ -78,6 +81,7 @@ final class ShieldManager: ObservableObject {
         let minutes = graceMinutes ?? settings.gracePeriodMinutes
         settings.isUnlocked = true
         settings.unlockExpiresAt = Date().addingTimeInterval(TimeInterval(minutes * 60))
+        settings.dailyLimitTriggered = true
         releaseShield()
         scheduleGraceRelock()
     }
@@ -102,8 +106,9 @@ final class ShieldManager: ObservableObject {
             return
         }
         graceTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { [weak self] _ in
-            Task { @MainActor in
-                self?.checkGraceExpired()
+            guard let self else { return }
+            Task { @MainActor [self] in
+                self.checkGraceExpired()
             }
         }
         RunLoop.main.add(graceTimer!, forMode: .common)
@@ -125,13 +130,32 @@ final class TikTokShieldManager: ObservableObject {
         ShieldManager.shared.reapplyAllShields()
     }
 
-    /// After completing check-in: unshield intent-gate apps until idle (no usage for `tiktokIdleMinutesAfterExit`).
+    /// After completing check-in: unshield intent-gate targets until idle (no usage for `tiktokIdleMinutesAfterExit`).
+    /// Also sets a concrete active-session expiry so immediate re-open attempts do not get re-shielded.
     func grantUnlockAfterCheckIn() {
+        let idleMinutes = max(1, settings.tiktokIdleMinutesAfterExit)
+        let now = Date()
+
         settings.tiktokIsUnlocked = true
-        settings.tiktokUnlockExpiresAt = nil
-        settings.lastTikTokUnlockAt = Date()
+        settings.tiktokUnlockExpiresAt = now.addingTimeInterval(TimeInterval(idleMinutes * 60))
+        settings.lastTikTokUnlockAt = now
         settings.lastTikTokUsageAt = nil
+
+        ShieldManager.shared.releaseShield()
         ShieldManager.shared.reapplyAllShields()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            ShieldManager.shared.reapplyAllShields()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+            ShieldManager.shared.reapplyAllShields()
+        }
+
+        do {
+            try RegulationActivityScheduler.restartTikTokUsageMonitoring(settings: settings)
+        } catch {
+            // Keep unlock session active even if monitor restart fails.
+        }
         scheduleIdlePolling()
     }
 
@@ -157,8 +181,9 @@ final class TikTokShieldManager: ObservableObject {
     private func scheduleIdlePolling() {
         graceTimer?.invalidate()
         graceTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
-            Task { @MainActor in
-                self?.checkGraceExpired()
+            guard let self else { return }
+            Task { @MainActor [self] in
+                self.checkGraceExpired()
             }
         }
         RunLoop.main.add(graceTimer!, forMode: .common)
@@ -198,12 +223,15 @@ enum RegulationActivityScheduler {
         )
     }
 
-    /// Usage on intent-gate apps (fires when cumulative usage crosses threshold in the interval).
+    /// Usage on intent-gate targets (fires when cumulative usage crosses threshold in the interval).
     static func restartTikTokUsageMonitoring(settings: RegulationSettingsStore = RegulationSettingsStore()) throws {
         center.stopMonitoring([TikTokUsageActivity.name])
         guard let tiktok = settings.loadTikTokSelection() else { return }
-        let hasApps = !tiktok.applicationTokens.isEmpty
-        guard hasApps else { return }
+        let hasTargets =
+            !tiktok.applicationTokens.isEmpty
+            || !tiktok.categoryTokens.isEmpty
+            || !tiktok.webDomainTokens.isEmpty
+        guard hasTargets else { return }
 
         let schedule = DeviceActivitySchedule(
             intervalStart: DateComponents(hour: 0, minute: 0),

@@ -210,7 +210,7 @@ struct FamilyControlsStatsView: View {
     }
 }
 
-private extension DeviceActivityReport.Context {
+extension DeviceActivityReport.Context {
     static let respiteBarGraph = Self("Respite Bar Graph")
     static let respitePieChart = Self("Respite Pie Chart")
 }

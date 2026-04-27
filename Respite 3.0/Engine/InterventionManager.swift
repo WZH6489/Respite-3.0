@@ -8,6 +8,11 @@ enum RegulationChallenge: String, Equatable, Identifiable {
     var id: String { rawValue }
 }
 
+enum PuzzleLaunchMode: String, Equatable {
+    case tile
+    case math
+}
+
 /// Manages which intervention popup to show and tracks TikTok intent gate triggers.
 final class InterventionManager: ObservableObject {
 
@@ -15,14 +20,16 @@ final class InterventionManager: ObservableObject {
     @Published var showTikTokGate: Bool = false
     @Published var showPuzzleBreak: Bool = false
     @Published var showBreathwork: Bool = false
+    @Published var preferredPuzzleLaunchMode: PuzzleLaunchMode = .tile
 
     /// Deep link from shield (`regulate://`) — full-screen regulation flow.
     @Published var regulationChallenge: RegulationChallenge? = nil
+    @Published var regulationPuzzleLaunchMode: PuzzleLaunchMode = .tile
 
     /// Deep link from TikTok shield (`regulate://intent`) — full-screen intent gate.
     @Published var regulationIntentGate: Bool = false
 
-    /// Deep link `regulate://tiktok/options` — choose intent, puzzle, or breathwork for intent-gate apps.
+    /// Legacy picker presentation flag. `regulate://tiktok/options` now opens the recommended intervention directly.
     @Published var showTikTokUnlockPicker: Bool = false
 
     /// When true, completing puzzle/breathwork unlocks intent-gate apps (`TikTokShieldManager`), not daily-limit shields.
@@ -44,7 +51,8 @@ final class InterventionManager: ObservableObject {
         showTikTokGate = true
     }
 
-    func triggerPuzzleBreak() {
+    func triggerPuzzleBreak(mode: PuzzleLaunchMode = .tile) {
+        preferredPuzzleLaunchMode = mode
         showPuzzleBreak = true
     }
 
@@ -52,22 +60,52 @@ final class InterventionManager: ObservableObject {
         showBreathwork = true
     }
 
-    func openRegulationChallenge(_ challenge: RegulationChallenge, unlocksTikTok: Bool = false) {
+    /// Opens the recommended intervention based on current behavior signals.
+    func triggerAdaptiveIntervention() {
+        let recommendation = RecoveryInsightsStore.currentSnapshot().recommendedIntervention
+        switch recommendation {
+        case .puzzle:
+            triggerPuzzleBreak(mode: .math)
+        case .breathwork:
+            triggerBreathwork()
+        }
+    }
+
+    func openRegulationChallenge(
+        _ challenge: RegulationChallenge,
+        unlocksTikTok: Bool = false,
+        puzzleMode: PuzzleLaunchMode = .tile
+    ) {
         regulationUnlocksTikTokOnly = unlocksTikTok
+        if challenge == .puzzle {
+            regulationPuzzleLaunchMode = puzzleMode
+        }
         regulationChallenge = challenge
     }
 
     func clearRegulationChallenge() {
         regulationChallenge = nil
         regulationUnlocksTikTokOnly = false
+        regulationPuzzleLaunchMode = .tile
     }
 
     func openRegulationIntentGate() {
         regulationIntentGate = true
     }
 
+    func openRecommendedTikTokIntervention() {
+        let recommendation = RecoveryInsightsStore.currentSnapshot().recommendedIntervention
+        switch recommendation {
+        case .puzzle:
+            openRegulationChallenge(.puzzle, unlocksTikTok: true, puzzleMode: .math)
+        case .breathwork:
+            openRegulationChallenge(.breathwork, unlocksTikTok: true)
+        }
+    }
+
     func openTikTokUnlockPicker() {
-        showTikTokUnlockPicker = true
+        showTikTokUnlockPicker = false
+        openRecommendedTikTokIntervention()
     }
 
     // MARK: - Logging

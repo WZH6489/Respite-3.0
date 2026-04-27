@@ -16,11 +16,17 @@ enum RegulationURLHandler {
             return
         }
 
+        // regulate://adaptive — choose intervention automatically from insights.
+        if host == "adaptive" || path == "adaptive" {
+            interventions.triggerAdaptiveIntervention()
+            return
+        }
+
         // regulate://tiktok/... — intent-gate unlock paths
         if host == "tiktok" {
             switch path {
             case "options":
-                interventions.openTikTokUnlockPicker()
+                interventions.openRecommendedTikTokIntervention()
                 return
             case "intent":
                 interventions.openRegulationIntentGate()

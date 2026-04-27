@@ -1,5 +1,4 @@
 import AppIntents
-import UIKit
 
 // MARK: - Shared helpers
 
@@ -44,13 +43,25 @@ struct RespiteActivateCheckInIntent: AppIntent {
 }
 
 struct RespiteShowMoreOptionsIntent: AppIntent {
-    static var title: LocalizedStringResource = "Respite — more options"
-    static var description = IntentDescription("Opens puzzle, breathwork, or check-in for intent-gate apps.")
-    static var openAppWhenRun: Bool = true
+    static var title: LocalizedStringResource = "Activate Respite - intelligently shuffled"
+    static var description = IntentDescription(
+        "Opens Respite's more-options flow (check-in, breathing, math challenge, tile puzzle). Add this to Shortcuts → Automation → App → Is Opened."
+    )
+    static var openAppWhenRun: Bool = false
+    static var supportedModes: IntentModes = [.background, .foreground(.dynamic)]
 
+    @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        if RespiteShortcutRunner.isSessionActive() {
+            return .result(dialog: IntentDialog("Session active — enjoy your session."))
+        }
+        do {
+            try await continueInForeground(alwaysConfirm: false)
+        } catch {
+            return .result(dialog: IntentDialog("Couldn't open Respite in the foreground."))
+        }
         await RespiteShortcutRunner.deliver(urlString: "regulate://tiktok/options")
-        return .result(dialog: IntentDialog("Opening options."))
+        return .result(dialog: IntentDialog("Opening Respite intelligently shuffled…"))
     }
 }
 
@@ -126,10 +137,11 @@ struct RespiteShortcutsProvider: AppShortcutsProvider {
         AppShortcut(
             intent: RespiteShowMoreOptionsIntent(),
             phrases: [
-                "Respite options in \(.applicationName)",
-                "More Respite options in \(.applicationName)"
+                "Activate Respite options in \(.applicationName)",
+                "Activate Respite intelligently shuffled in \(.applicationName)",
+                "Respite options in \(.applicationName)"
             ],
-            shortTitle: "Respite — more options",
+            shortTitle: "Activate Respite - intelligently shuffled",
             systemImageName: "ellipsis.circle"
         )
         AppShortcut(

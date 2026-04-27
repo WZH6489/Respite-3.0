@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Respite 3.0 - Interactive Presentation</title>
+  <style>
+    :root {
+      --ink: #10201c;
+      --muted: #314e46;
+      --glass: rgba(255, 255, 255, 0.24);
+      --glass-strong: rgba(255, 255, 255, 0.33);
+      --stroke: rgba(255, 255, 255, 0.45);
+      --green: #2f9878;
+      --green-2: #47b38f;
+      --blue: #487fc6;
+      --blue-2: #5ba2e5;
+      --danger: #b94f5f;
+      --bg-top: #d4e4df;
+      --bg-mid: #9ab2ab;
+      --bg-bot: #6a8a8f;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      font-family: "Avenir Next", "SF Pro Display", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 640px at 8% -12%, rgba(239, 249, 245, 0.95), transparent 60%),
+        radial-gradient(920px 620px at 100% -8%, rgba(170, 198, 214, 0.75), transparent 58%),
+        linear-gradient(155deg, var(--bg-top), var(--bg-mid) 58%, var(--bg-bot));
+    }
+
+    .deck {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 14px;
+      padding: 14px;
+    }
+
+    .bar, .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+
+    .logo {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #eef8f5;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      box-shadow: 0 6px 20px rgba(24, 60, 57, 0.2);
+      overflow: hidden;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .logo.has-image span { display: none; }
+    .logo.has-image img { display: block; }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      border: 1px solid rgba(16, 32, 28, 0.16);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: var(--glass-strong);
+      color: var(--ink);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      color: #f3fffb;
+      border-color: transparent;
+      background: linear-gradient(120deg, var(--green-2), var(--green));
+    }
+
+    .btn.blue {
+      color: #f5fbff;
+      border-color: transparent;
+      background: linear-gradient(120deg, var(--blue-2), var(--blue));
+    }
+
+    .slides {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(24px);
+      transition: .28s ease;
+      padding: clamp(16px, 3vw, 34px);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 14px;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(30px, 4vw, 54px); }
+    h2 { font-size: clamp(24px, 3.3vw, 42px); }
+    .sub {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: clamp(14px, 1.5vw, 18px);
+      max-width: 1000px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+      align-content: start;
+      height: 100%;
+    }
+
+    .card {
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 14px;
+    }
+
+    .card h3 { margin-bottom: 8px; }
+    .card p { color: var(--muted); line-height: 1.36; }
+
+    .col-3 { grid-column: span 3; }
+    .col-4 { grid-column: span 4; }
+    .col-5 { grid-column: span 5; }
+    .col-6 { grid-column: span 6; }
+    .col-7 { grid-column: span 7; }
+    .col-8 { grid-column: span 8; }
+    .col-12 { grid-column: span 12; }
+
+    .section-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 700;
+      font-size: 12px;
+      color: #f3fffb;
+      background: linear-gradient(120deg, var(--blue), var(--green));
+      margin-bottom: 6px;
+    }
+
+    .kpi {
+      font-size: clamp(26px, 3vw, 42px);
+      font-weight: 800;
+      line-height: 1.02;
+      margin-top: 6px;
+    }
+
+    .track {
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(16, 32, 28, 0.14);
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      transition: .25s ease;
+    }
+
+    .phone-shell {
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.52);
+      background: rgba(255, 255, 255, 0.24);
+      backdrop-filter: blur(20px);
+      padding: 12px;
+      box-shadow: 0 12px 36px rgba(24, 49, 50, 0.2);
+    }
+
+    .screen {
+      border-radius: 20px;
+      padding: 12px;
+      min-height: 380px;
+      background: linear-gradient(155deg, rgba(211,230,223,0.55), rgba(142,169,160,0.50));
+      border: 1px solid rgba(255, 255, 255, 0.45);
+    }
+
+    .mini-card {
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.35);
+      padding: 8px;
+      margin-top: 8px;
+    }
+
+    .overlay {
+      margin-top: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(185, 79, 95, 0.35);
+      background: rgba(255, 229, 233, 0.68);
+      color: #5d1f2a;
+      padding: 10px;
+      display: none;
+    }
+
+    .overlay.active { display: block; }
+
+    .footer small { color: var(--muted); }
+
+    @media (max-width: 960px) {
+      .col-3, .col-4, .col-5, .col-6, .col-7, .col-8 { grid-column: span 12; }
+      .deck { padding: 10px; }
+      .bar, .footer { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <div class="bar">
+      <div class="brand">
+        <div class="logo" id="logoBox">
+          <span>R</span>
+          <img id="logoImg" alt="Respite App Icon" />
+        </div>
+        <span>Respite 3.0 Presentation</span>
+      </div>
+      <div class="controls">
+        <button class="btn" id="jumpTitle">Title</button>
+        <button class="btn" id="jumpDemo">Live Demo</button>
+      </div>
+    </div>
+
+    <main class="slides" id="slides">
+      <section class="slide active" data-name="title">
+        <div>
+          <h1>Respite 3.0</h1>
+          <p class="sub">How we designed and built a practical digital wellbeing platform with glass UI, behavior-first flows, and Screen Time-powered interventions.</p>
+        </div>
+        <div class="grid">
+          <div class="card col-7">
+            <div class="section-pill">Presentation Structure</div>
+            <h3>3 Main Sections</h3>
+            <p>1) UI system and visual language<br>2) How we came up with the idea<br>3) Core functions and behavior engine</p>
+          </div>
+          <div class="card col-5">
+            <h3>Project Scope</h3>
+            <p>iOS app + multiple extensions: DeviceActivity monitor/report, shield action/configuration, and study live widget.</p>
+          </div>
+          <div class="card col-12">
+            <h3>Theme</h3>
+            <p>This deck mirrors Respite's glass styling and calm blue/green palette. If you send the exact app icon image file path, this title logo will use it automatically.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-name="ui">
+        <div>
+          <div class="section-pill">Section 1 - UI</div>
+          <h2>Glass UI System</h2>
+          <p class="sub">We implemented a dynamic visual layer with frosted glass cards, adaptive gradients, and consistent information hierarchy.</p>
+        </div>
+        <div class="grid">
+          <div class="card col-4">
+            <h3>Background Engine</h3>
+            <p>Time-aware gradient layers with highlight drift and phase tinting using a dedicated dynamic background view.</p>
+          </div>
+          <div class="card col-4">
+            <h3>Reusable Glass Cards</h3>
+            <p>Shared card modifier with frosted/opaque modes and bordered glass treatment for visual consistency.</p>
+          </div>
+          <div class="card col-4">
+            <h3>Accessible Contrast</h3>
+            <p>Text hierarchy and soft borders preserve readability in both light and dark contexts.</p>
+          </div>
+          <div class="card col-6">
+            <h3>Design Outcome</h3>
+            <p>The app feels unified across Dashboard, Study, Reflections, and Settings while still supporting dense data blocks.</p>
+          </div>
+          <div class="card col-6">
+            <h3>UI Implementation Notes</h3>
+            <p>Core styling came from shared theme primitives and card modifiers, reducing style drift between screens.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-name="idea">
+        <div>
+          <div class="section-pill">Section 2 - Idea</div>
+          <h2>How We Came Up With It</h2>
+          <p class="sub">The concept came from one gap: people don't just need blocking, they need guided recovery when attention breaks.</p>
+        </div>
+        <div class="grid">
+          <div class="card col-6">
+            <h3>Observed Problem</h3>
+            <p>Standard app timers enforce hard limits but fail at the moment of impulse. Users bounce back into loops with no reflective step.</p>
+          </div>
+          <div class="card col-6">
+            <h3>Core Thesis</h3>
+            <p>Replace static punishment with a behavior loop: detect risk, interrupt intentionally, and convert the moment into a small win.</p>
+          </div>
+          <div class="card col-4">
+            <h3>Design Principle 1</h3>
+            <p>Interventions must be short enough to complete under friction.</p>
+          </div>
+          <div class="card col-4">
+            <h3>Design Principle 2</h3>
+            <p>Every intervention should produce measurable momentum.</p>
+          </div>
+          <div class="card col-4">
+            <h3>Design Principle 3</h3>
+            <p>Insights should guide tomorrow's settings automatically.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-name="functions">
+        <div>
+          <div class="section-pill">Section 3 - Functions</div>
+          <h2>What We Built</h2>
+          <p class="sub">Operational features in the current system, from enforcement to insight generation.</p>
+        </div>
+        <div class="grid">
+          <div class="card col-3"><h3>Intent Gate</h3><p>Check-in before opening selected high-risk apps.</p></div>
+          <div class="card col-3"><h3>Daily Limit</h3><p>Pause threshold + grace period after intervention completion.</p></div>
+          <div class="card col-3"><h3>Focus Runtime</h3><p>Persistent study timer synchronized with live activity state.</p></div>
+          <div class="card col-3"><h3>Reflections</h3><p>Prompt-driven logging with archive and editing support.</p></div>
+          <div class="card col-6"><h3>Recovery Score + Focus Quality</h3><p>Two distinct behavioral indicators with weekly trend views and metric cards.</p></div>
+          <div class="card col-6"><h3>Achievements + Streak Momentum</h3><p>Habit reinforcement via goals, progress bars, and badge milestones.</p></div>
+          <div class="card col-12"><h3>Extension Architecture</h3><p>DeviceActivity monitor/report + Shield extensions + Widget extension provide system-level behavior enforcement and surfacing.</p></div>
+        </div>
+      </section>
+
+      <section class="slide" data-name="demo">
+        <div>
+          <div class="section-pill">Live Demo</div>
+          <h2>How It Works in Practice</h2>
+          <p class="sub">Interactive simulation: open a restricted app, complete intervention, get grace, and watch metrics update.</p>
+        </div>
+        <div class="grid">
+          <div class="card col-7">
+            <h3>Interactive Simulation</h3>
+            <div class="controls" style="margin-top:8px;">
+              <button class="btn blue" id="openApp">Open TikTok</button>
+              <button class="btn" id="interveneBreath">Complete Breathwork (+5m)</button>
+              <button class="btn" id="intervenePuzzle">Complete Puzzle (+8m)</button>
+              <button class="btn" id="manualExit">Manual Exit</button>
+              <button class="btn primary" id="completeFocus">Complete Focus Session (+25m)</button>
+              <button class="btn" id="resetDemo">Reset Demo</button>
+            </div>
+
+            <div class="phone-shell" style="margin-top:12px;">
+              <div class="screen">
+                <h3 style="margin-bottom:4px;">App State</h3>
+                <p id="stateText">Idle. No restricted app opened.</p>
+
+                <div class="mini-card">
+                  <strong>Grace period:</strong> <span id="graceText">0 min</span>
+                </div>
+                <div class="mini-card">
+                  <strong>Interventions completed:</strong> <span id="interventionsText">0</span>
+                </div>
+
+                <div class="overlay" id="shieldOverlay">
+                  <strong>Intent Gate Active</strong><br>
+                  TikTok is restricted right now. Complete an intervention to continue.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card col-5">
+            <h3>Dashboard Effect (Live)</h3>
+            <p>Today</p>
+            <div class="kpi" id="todaySaved">0m saved</div>
+            <p style="margin-top:6px;">This pace, 1 year</p>
+            <div class="kpi" id="yearSaved">0h 0m saved</div>
+
+            <p style="margin-top:10px;">Recovery score</p>
+            <div class="kpi" id="recoveryScore">41</div>
+            <div class="track"><div class="fill" id="recoveryFill" style="width:41%"></div></div>
+
+            <p style="margin-top:10px;">Focus quality</p>
+            <div class="kpi" id="focusQuality">58</div>
+            <div class="track"><div class="fill" id="qualityFill" style="width:58%"></div></div>
+
+            <p style="margin-top:10px;">Streak goal progress</p>
+            <div class="track"><div class="fill" id="goalFill" style="width:0%"></div></div>
+            <p id="goalLabel" style="margin-top:6px;">0% of daily goal</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-name="ending">
+        <div>
+          <h2>Ending</h2>
+          <p class="sub">Respite is a full behavior-change product: not just tracking, not just blocking, but a closed loop from impulse to recovery.</p>
+        </div>
+        <div class="grid">
+          <div class="card col-6">
+            <h3>What We Made</h3>
+            <p>A glass-themed attention platform that combines enforcement, interventions, runtime focus sessions, and reflection-based insights.</p>
+          </div>
+          <div class="card col-6">
+            <h3>Why It Matters</h3>
+            <p>It turns screen-time friction into measurable progress that users can sustain daily.</p>
+          </div>
+          <div class="card col-12">
+            <h3>Thank you</h3>
+            <p>Questions: architecture, metrics model, intervention effectiveness, and rollout strategy.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="footer">
+      <small>Use Arrow Left/Right to navigate</small>
+      <div class="controls">
+        <button class="btn" id="prev">Prev</button>
+        <button class="btn primary" id="next">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let slideIndex = 0;
+
+    function showSlide(next) {
+      slideIndex = (next + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle('active', i === slideIndex));
+    }
+
+    document.getElementById('prev').addEventListener('click', () => showSlide(slideIndex - 1));
+    document.getElementById('next').addEventListener('click', () => showSlide(slideIndex + 1));
+    document.getElementById('jumpDemo').addEventListener('click', () => showSlide(4));
+    document.getElementById('jumpTitle').addEventListener('click', () => showSlide(0));
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') showSlide(slideIndex + 1);
+      if (e.key === 'ArrowLeft') showSlide(slideIndex - 1);
+    });
+
+    // Optional app icon wiring.
+    // If you place/export your app icon as "respite-app-icon.png" next to this HTML,
+    // the deck will use it automatically.
+    const logoImg = document.getElementById('logoImg');
+    logoImg.src = 'respite-app-icon.png';
+    logoImg.addEventListener('load', () => {
+      document.getElementById('logoBox').classList.add('has-image');
+    });
+
+    let todayMinutes = 0;
+    let interventions = 0;
+    let graceMinutes = 0;
+    let recovery = 41;
+    let quality = 58;
+    let manualEnds = 0;
+    let totalSessions = 0;
+    let restrictedOpenBlocked = false;
+
+    const stateText = document.getElementById('stateText');
+    const graceText = document.getElementById('graceText');
+    const interventionsText = document.getElementById('interventionsText');
+    const overlay = document.getElementById('shieldOverlay');
+
+    const todaySavedEl = document.getElementById('todaySaved');
+    const yearSavedEl = document.getElementById('yearSaved');
+    const recoveryScoreEl = document.getElementById('recoveryScore');
+    const focusQualityEl = document.getElementById('focusQuality');
+    const recoveryFill = document.getElementById('recoveryFill');
+    const qualityFill = document.getElementById('qualityFill');
+    const goalFill = document.getElementById('goalFill');
+    const goalLabel = document.getElementById('goalLabel');
+
+    function hm(mins) {
+      const h = Math.floor(mins / 60);
+      const m = Math.max(0, mins % 60);
+      return `${h}h ${m}m`;
+    }
+
+    function recalcMetrics() {
+      const manualPenalty = manualEnds * 2;
+      recovery = Math.max(0, Math.min(100, 41 + Math.floor(todayMinutes / 8) + interventions * 3 - manualPenalty));
+      quality = Math.max(0, Math.min(100, 58 + Math.floor(todayMinutes / 10) + interventions * 2 - manualPenalty * 2));
+    }
+
+    function render() {
+      graceText.textContent = `${graceMinutes} min`;
+      interventionsText.textContent = String(interventions);
+
+      todaySavedEl.textContent = `${todayMinutes}m saved`;
+      yearSavedEl.textContent = `${hm(todayMinutes * 365)} saved`;
+
+      recoveryScoreEl.textContent = String(recovery);
+      focusQualityEl.textContent = String(quality);
+      recoveryFill.style.width = `${recovery}%`;
+      qualityFill.style.width = `${quality}%`;
+
+      const goal = Math.min(100, Math.round((todayMinutes / 60) * 100));
+      goalFill.style.width = `${goal}%`;
+      goalLabel.textContent = `${goal}% of daily goal`;
+
+      overlay.classList.toggle('active', restrictedOpenBlocked);
+    }
+
+    document.getElementById('openApp').addEventListener('click', () => {
+      if (graceMinutes > 0) {
+        stateText.textContent = 'TikTok opened during grace period. Session is temporarily allowed.';
+      } else {
+        restrictedOpenBlocked = true;
+        stateText.textContent = 'Restricted app launch intercepted by Intent Gate.';
+      }
+      render();
+    });
+
+    document.getElementById('interveneBreath').addEventListener('click', () => {
+      interventions += 1;
+      graceMinutes += 5;
+      todayMinutes += 5;
+      totalSessions += 1;
+      restrictedOpenBlocked = false;
+      stateText.textContent = 'Breathwork completed. Grace unlocked and progress recorded.';
+      recalcMetrics();
+      render();
+    });
+
+    document.getElementById('intervenePuzzle').addEventListener('click', () => {
+      interventions += 1;
+      graceMinutes += 8;
+      todayMinutes += 8;
+      totalSessions += 1;
+      restrictedOpenBlocked = false;
+      stateText.textContent = 'Puzzle completed. Grace unlocked and progress recorded.';
+      recalcMetrics();
+      render();
+    });
+
+    document.getElementById('completeFocus').addEventListener('click', () => {
+      todayMinutes += 25;
+      totalSessions += 1;
+      graceMinutes = Math.max(0, graceMinutes - 2);
+      stateText.textContent = 'Focus session completed naturally. Recovery momentum increased.';
+      recalcMetrics();
+      render();
+    });
+
+    document.getElementById('manualExit').addEventListener('click', () => {
+      manualEnds += 1;
+      totalSessions += 1;
+      graceMinutes = Math.max(0, graceMinutes - 4);
+      stateText.textContent = 'Session ended manually. Quality signal reduced.';
+      recalcMetrics();
+      render();
+    });
+
+    document.getElementById('resetDemo').addEventListener('click', () => {
+      todayMinutes = 0;
+      interventions = 0;
+      graceMinutes = 0;
+      manualEnds = 0;
+      totalSessions = 0;
+      restrictedOpenBlocked = false;
+      recovery = 41;
+      quality = 58;
+      stateText.textContent = 'Idle. No restricted app opened.';
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

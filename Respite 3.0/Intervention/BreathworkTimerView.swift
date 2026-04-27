@@ -1,7 +1,10 @@
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
+#endif
 
 struct BreathworkTimerView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @Binding var isPresented: Bool
     var isRegulationSession: Bool = false
     var onRegulationComplete: (() -> Void)? = nil
@@ -14,9 +17,8 @@ struct BreathworkTimerView: View {
     @State private var timer: Timer? = nil
     @State private var elapsedInPhase: Int = 0
     @State private var didCallRegulationComplete = false
-    @State private var showTikTokNudge = false
+    @State private var showReturnNudge = false
     @State private var contentVisible = false
-    @State private var rotatingAura = false
 
     private let totalCycles = 3
 
@@ -94,15 +96,14 @@ struct BreathworkTimerView: View {
                 }
             }
             .safeAreaInset(edge: .bottom) {
-                if showTikTokNudge {
-                    tikTokNudgeBar
+                if showReturnNudge {
+                    returnNudgeBar
                         .padding(.horizontal, 16)
                         .padding(.bottom, 8)
                 }
             }
             .onAppear {
                 contentVisible = true
-                rotatingAura = true
             }
         }
     }
@@ -110,31 +111,29 @@ struct BreathworkTimerView: View {
     private var headerCard: some View {
         VStack(spacing: 8) {
             Text("Settle your breath")
-                .font(.system(size: 30, weight: .semibold, design: .serif))
-                .foregroundStyle(RespiteTheme.textPrimary)
+                .font(.system(size: 30, weight: .semibold, design: .default))
+                .foregroundStyle(textPrimary)
             Text("4-7-8 rhythm · gentle and steady")
-                .font(.system(size: 14, weight: .medium, design: .rounded))
-                .foregroundStyle(RespiteTheme.textSecondary)
+                .font(.system(size: 14, weight: .medium, design: .default))
+                .foregroundStyle(textSecondary)
         }
         .frame(maxWidth: .infinity)
         .padding(16)
-        .background(cardBackground)
+        .respiteGlassCard(cornerRadius: 20)
     }
 
-    private var tikTokNudgeBar: some View {
+    private var returnNudgeBar: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Return to your app")
                 .font(.subheadline.weight(.semibold))
-                .foregroundStyle(RespiteTheme.textPrimary)
-            Text("TikTok should open for you now during your grace window.")
+                .foregroundStyle(textPrimary)
+            Text("Your app is unlocked for Extra Time.")
                 .font(.footnote)
-                .foregroundStyle(RespiteTheme.textMuted)
+                .foregroundStyle(textSecondary)
             Button {
-                if let url = URL(string: "tiktok://") {
-                    UIApplication.shared.open(url)
-                }
+                returnToPreviousApp()
             } label: {
-                Label("Open TikTok", systemImage: "arrow.up.right.square")
+                Label("Return now", systemImage: "arrow.uturn.backward")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
@@ -143,12 +142,12 @@ struct BreathworkTimerView: View {
             .tint(RespiteTheme.duskBlue)
         }
         .padding(16)
-        .background(cardBackground)
+        .respiteGlassCard(cornerRadius: 20)
     }
 
     private var backgroundGradient: some View {
         ZStack {
-            RespiteTheme.appBackground
+            RespiteDynamicBackground()
 
             Circle()
                 .fill(breathPhase.color.opacity(0.12))
@@ -181,11 +180,8 @@ struct BreathworkTimerView: View {
     private var breathingCircle: some View {
         ZStack {
             Circle()
-                .trim(from: 0.05, to: 0.95)
-                .stroke(breathPhase.color.opacity(0.22), style: StrokeStyle(lineWidth: 7, lineCap: .round, dash: [10, 10]))
+                .strokeBorder(breathPhase.color.opacity(0.20), lineWidth: 6)
                 .frame(width: 230, height: 230)
-                .rotationEffect(.degrees(rotatingAura ? 360 : 0))
-                .animation(.linear(duration: 16).repeatForever(autoreverses: false), value: rotatingAura)
 
             ForEach(0..<3) { i in
                 Circle()
@@ -226,14 +222,14 @@ struct BreathworkTimerView: View {
     private var phaseLabel: some View {
         VStack(spacing: 6) {
             Text(breathPhase.label)
-                .font(.system(size: 26, weight: .semibold, design: .serif))
-                .foregroundStyle(RespiteTheme.textPrimary)
+                .font(.system(size: 26, weight: .semibold, design: .default))
+                .foregroundStyle(textPrimary)
                 .animation(.easeInOut(duration: 0.35), value: breathPhase)
 
             if breathPhase != .ready && breathPhase != .done {
                 Text(phaseSubtitle)
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
-                    .foregroundStyle(RespiteTheme.textSecondary)
+                    .font(.system(size: 14, weight: .medium, design: .default))
+                    .foregroundStyle(textSecondary)
                     .transition(.opacity)
             }
         }
@@ -259,7 +255,7 @@ struct BreathworkTimerView: View {
             }
         }
         .font(.system(size: 14, weight: .medium, design: .rounded))
-        .foregroundStyle(RespiteTheme.textSecondary)
+        .foregroundStyle(textSecondary)
         .multilineTextAlignment(.center)
     }
 
@@ -281,6 +277,7 @@ struct BreathworkTimerView: View {
                 VStack(spacing: 10) {
                     if !isRegulationSession {
                         Button {
+                            InteractionFeedback.tap()
                             resetSession()
                         } label: {
                             Text("Go again")
@@ -291,10 +288,13 @@ struct BreathworkTimerView: View {
                                 .background(RoundedRectangle(cornerRadius: 14).fill(RespiteTheme.pine))
                         }
                     }
-                    Button { isPresented = false } label: {
+                    Button {
+                        InteractionFeedback.tap()
+                        isPresented = false
+                    } label: {
                         Text("I’m done")
                             .font(.system(size: 14, weight: .medium, design: .rounded))
-                            .foregroundStyle(RespiteTheme.textSecondary)
+                                .foregroundStyle(RespiteTheme.textSecondary)
                     }
                 }
 
@@ -314,6 +314,7 @@ struct BreathworkTimerView: View {
     }
 
     private func startSession() {
+        InteractionFeedback.tap()
         cyclesCompleted = 0
         startPhase(.inhale)
     }
@@ -367,7 +368,11 @@ struct BreathworkTimerView: View {
                 if isRegulationSession, !didCallRegulationComplete {
                     didCallRegulationComplete = true
                     onRegulationComplete?()
-                    showTikTokNudge = true
+                    showReturnNudge = true
+                }
+                InteractionFeedback.success()
+                Task {
+                    try? await HealthKitMindfulnessStore.writeMindfulness(minutes: totalCycles)
                 }
             } else {
                 startPhase(.inhale)
@@ -380,5 +385,14 @@ struct BreathworkTimerView: View {
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
+    }
+
+    private var textPrimary: Color { .primary }
+    private var textSecondary: Color { .secondary }
+
+    private func returnToPreviousApp() {
+        #if canImport(UIKit)
+        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+        #endif
     }
 }

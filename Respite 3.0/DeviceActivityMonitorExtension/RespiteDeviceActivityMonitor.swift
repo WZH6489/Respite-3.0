@@ -3,15 +3,18 @@ import Foundation
 
 private let tiktokUsageActivityId = "com.stormforge.Respite.tiktokUsage"
 private let tiktokUsageThresholdId = "tiktokUsageThreshold"
+private let regulationActivityId = "com.stormforge.Respite.regulation"
+private let regulationUsageThresholdId = "usageThreshold"
 
 @objc(RespiteDeviceActivityMonitor)
-final class RespiteDeviceActivityMonitor: DeviceActivityMonitor {
+class RespiteDeviceActivityMonitor: DeviceActivityMonitor {
     nonisolated override init() {
         super.init()
     }
 
     nonisolated override func intervalDidStart(for activity: DeviceActivityName) {
         super.intervalDidStart(for: activity)
+        RegulationMonitorShield.resetDailyLimitForNewInterval()
         RegulationMonitorShield.applyShieldIfLocked()
     }
 
@@ -24,7 +27,13 @@ final class RespiteDeviceActivityMonitor: DeviceActivityMonitor {
         if activity.rawValue == tiktokUsageActivityId, event.rawValue == tiktokUsageThresholdId {
             RegulationMonitorShield.recordTikTokUsageNow()
             RegulationMonitorShield.restartTikTokUsageMonitoring()
+            return
         }
-        RegulationMonitorShield.applyShieldAfterThreshold()
+        if activity.rawValue == regulationActivityId, event.rawValue == regulationUsageThresholdId {
+            RegulationMonitorShield.applyShieldAfterThreshold()
+        }
     }
 }
+
+@objc(DeviceActivityMonitorExtension)
+final class DeviceActivityMonitorExtension: RespiteDeviceActivityMonitor {}

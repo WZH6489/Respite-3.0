@@ -32,4 +32,17 @@ enum IntentGateShieldMatching {
         if let category, matchesActivityCategory(category) { return true }
         return false
     }
+
+    nonisolated static func matchesWebDomainToken(_ token: WebDomainToken) -> Bool {
+        guard let selection = loadIntentGateSelection() else { return false }
+        if selection.webDomainTokens.contains(token) { return true }
+        for t in selection.webDomainTokens where t == token { return true }
+        return false
+    }
+
+    nonisolated static func matchesWebDomain(_ webDomain: WebDomain, category: ActivityCategory?) -> Bool {
+        if let token = webDomain.token, matchesWebDomainToken(token) { return true }
+        if let category, matchesActivityCategory(category) { return true }
+        return false
+    }
 }

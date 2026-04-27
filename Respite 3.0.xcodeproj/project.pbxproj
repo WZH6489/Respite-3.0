@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2651636A2F8ACBCF00F46E33 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 265163692F8ACBCF00F46E33 /* WidgetKit.framework */; };
+		2651636C2F8ACBCF00F46E33 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2651636B2F8ACBCF00F46E33 /* SwiftUI.framework */; };
+		2651637D2F8ACBD000F46E33 /* StudyLiveWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 265163672F8ACBCF00F46E33 /* StudyLiveWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		269D97F62F9D218F0098E181 /* Standalone-Respite-Presentation.html in Resources */ = {isa = PBXBuildFile; fileRef = 269D97F52F9D218F0098E181 /* Standalone-Respite-Presentation.html */; };
 		E90100012F67407000E9FBC1 /* DeviceActivityReportExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7C4CED61CC5E362FB3FD022C /* DeviceActivityReportExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E90100022F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E90100062F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E90100032F67407000E9FBC1 /* ShieldConfigurationExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E90100072F67407000E9FBC1 /* ShieldConfigurationExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -14,6 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2651637B2F8ACBD000F46E33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 265163662F8ACBCF00F46E33;
+			remoteInfo = StudyLiveWidgetExtension;
+		};
 		E90100222F67407000E9FBC1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 26F650C22F67407000E9FBC1 /* Project object */;
@@ -53,6 +64,7 @@
 			files = (
 				E90100012F67407000E9FBC1 /* DeviceActivityReportExtension.appex in Embed App Extensions */,
 				E90100022F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex in Embed App Extensions */,
+				2651637D2F8ACBD000F46E33 /* StudyLiveWidgetExtension.appex in Embed App Extensions */,
 				E90100032F67407000E9FBC1 /* ShieldConfigurationExtension.appex in Embed App Extensions */,
 				E90100042F67407000E9FBC1 /* ShieldActionExtension.appex in Embed App Extensions */,
 			);
@@ -62,7 +74,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		265163672F8ACBCF00F46E33 /* StudyLiveWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StudyLiveWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		265163692F8ACBCF00F46E33 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		2651636B2F8ACBCF00F46E33 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		2682ED9F2F80589B00361DD6 /* DeviceActivityReportExtension-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "DeviceActivityReportExtension-Info.plist"; sourceTree = "<group>"; };
+		269D97F52F9D218F0098E181 /* Standalone-Respite-Presentation.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "Standalone-Respite-Presentation.html"; sourceTree = "<group>"; };
 		26F650CA2F67407000E9FBC1 /* Respite 3.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Respite 3.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C4CED61CC5E362FB3FD022C /* DeviceActivityReportExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = DeviceActivityReportExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E90100062F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeviceActivityMonitorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +87,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		265163812F8ACBD000F46E33 /* Exceptions for "StudyLiveWidget" folder in "StudyLiveWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 265163662F8ACBCF00F46E33 /* StudyLiveWidgetExtension */;
+		};
+		265163832F8ACC9300F46E33 /* Exceptions for "Respite 3.0" folder in "StudyLiveWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Engine/StudyLiveActivityAttributes.swift,
+			);
+			target = 265163662F8ACBCF00F46E33 /* StudyLiveWidgetExtension */;
+		};
 		AA0000032F67407000E9FBC1 /* Exceptions for "Respite 3.0" folder in "Respite 3.0" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -89,10 +119,19 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		2651636D2F8ACBCF00F46E33 /* StudyLiveWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				265163812F8ACBD000F46E33 /* Exceptions for "StudyLiveWidget" folder in "StudyLiveWidgetExtension" target */,
+			);
+			path = StudyLiveWidget;
+			sourceTree = "<group>";
+		};
 		26F650CC2F67407000E9FBC1 /* Respite 3.0 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				AA0000032F67407000E9FBC1 /* Exceptions for "Respite 3.0" folder in "Respite 3.0" target */,
+				265163832F8ACC9300F46E33 /* Exceptions for "Respite 3.0" folder in "StudyLiveWidgetExtension" target */,
 			);
 			path = "Respite 3.0";
 			sourceTree = "<group>";
@@ -120,6 +159,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		265163642F8ACBCF00F46E33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2651636C2F8ACBCF00F46E33 /* SwiftUI.framework in Frameworks */,
+				2651636A2F8ACBCF00F46E33 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		26F650C72F67407000E9FBC1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -158,6 +206,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		265163682F8ACBCF00F46E33 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				265163692F8ACBCF00F46E33 /* WidgetKit.framework */,
+				2651636B2F8ACBCF00F46E33 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2694D3242F8A91DE00990893 /* Reflections */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Reflections;
+			sourceTree = "<group>";
+		};
 		26F650C12F67407000E9FBC1 = {
 			isa = PBXGroup;
 			children = (
@@ -167,7 +231,11 @@
 				E90100092F67407000E9FBC1 /* Respite 3.0/DeviceActivityMonitorExtension */,
 				E901000A2F67407000E9FBC1 /* Respite 3.0/ShieldConfigurationExtension */,
 				E901000B2F67407000E9FBC1 /* Respite 3.0/ShieldActionExtension */,
+				2651636D2F8ACBCF00F46E33 /* StudyLiveWidget */,
+				265163682F8ACBCF00F46E33 /* Frameworks */,
 				26F650CB2F67407000E9FBC1 /* Products */,
+				2694D3242F8A91DE00990893 /* Reflections */,
+				269D97F52F9D218F0098E181 /* Standalone-Respite-Presentation.html */,
 			);
 			sourceTree = "<group>";
 		};
@@ -179,6 +247,7 @@
 				E90100062F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex */,
 				E90100072F67407000E9FBC1 /* ShieldConfigurationExtension.appex */,
 				E90100082F67407000E9FBC1 /* ShieldActionExtension.appex */,
+				265163672F8ACBCF00F46E33 /* StudyLiveWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,6 +255,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		265163662F8ACBCF00F46E33 /* StudyLiveWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2651637E2F8ACBD000F46E33 /* Build configuration list for PBXNativeTarget "StudyLiveWidgetExtension" */;
+			buildPhases = (
+				265163632F8ACBCF00F46E33 /* Sources */,
+				265163642F8ACBCF00F46E33 /* Frameworks */,
+				265163652F8ACBCF00F46E33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2651636D2F8ACBCF00F46E33 /* StudyLiveWidget */,
+			);
+			name = StudyLiveWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = StudyLiveWidgetExtension;
+			productReference = 265163672F8ACBCF00F46E33 /* StudyLiveWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		26F650C92F67407000E9FBC1 /* Respite 3.0 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 26F650D52F67407100E9FBC1 /* Build configuration list for PBXNativeTarget "Respite 3.0" */;
@@ -202,6 +293,7 @@
 				E90100232F67407000E9FBC1 /* PBXTargetDependency */,
 				E90100252F67407000E9FBC1 /* PBXTargetDependency */,
 				E90100272F67407000E9FBC1 /* PBXTargetDependency */,
+				2651637C2F8ACBD000F46E33 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				26F650CC2F67407000E9FBC1 /* Respite 3.0 */,
@@ -312,9 +404,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2630;
+				LastSwiftUpdateCheck = 2640;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
+					265163662F8ACBCF00F46E33 = {
+						CreatedOnToolsVersion = 26.4;
+					};
 					26F650C92F67407000E9FBC1 = {
 						CreatedOnToolsVersion = 26.3;
 					};
@@ -351,11 +446,19 @@
 				E901000C2F67407000E9FBC1 /* DeviceActivityMonitorExtension */,
 				E901000D2F67407000E9FBC1 /* ShieldConfigurationExtension */,
 				E901000E2F67407000E9FBC1 /* ShieldActionExtension */,
+				265163662F8ACBCF00F46E33 /* StudyLiveWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		265163652F8ACBCF00F46E33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		26F650C82F67407000E9FBC1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -374,6 +477,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				269D97F62F9D218F0098E181 /* Standalone-Respite-Presentation.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +573,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		265163632F8ACBCF00F46E33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		26F650C62F67407000E9FBC1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -507,6 +618,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2651637C2F8ACBD000F46E33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 265163662F8ACBCF00F46E33 /* StudyLiveWidgetExtension */;
+			targetProxy = 2651637B2F8ACBD000F46E33 /* PBXContainerItemProxy */;
+		};
 		E90100212F67407000E9FBC1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 501D870E41296815F817F615 /* DeviceActivityReportExtension */;
@@ -551,6 +667,77 @@
 				WRAPPER_EXTENSION = appex;
 			};
 			name = Debug;
+		};
+		2651637F2F8ACBD000F46E33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TSH5D7226K;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyLiveWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StudyLiveWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Respite uses your location to show accurate sunrise and sunset times for your day rhythm.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0.StudyLiveWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		265163802F8ACBD000F46E33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TSH5D7226K;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyLiveWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StudyLiveWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Respite uses your location to show accurate sunrise and sunset times for your day rhythm.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stormforge.Respite-3-0.StudyLiveWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
 		};
 		26F650D32F67407100E9FBC1 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -682,7 +869,12 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Respite;
 				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Editor;\n    CFBundleURLName = \"com.stormforge.Respite.regulate\";\n    CFBundleURLSchemes =     (\n        regulate\n    );\n}";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Respite reads your existing mindful-minute entries so you can see your progress without double-counting sessions.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Respite logs each completed breathwork session as a mindful minute in Apple Health.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Respite uses your location to show accurate sunrise and sunset times for your day rhythm.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -728,7 +920,12 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Respite;
 				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Editor;\n    CFBundleURLName = \"com.stormforge.Respite.regulate\";\n    CFBundleURLSchemes =     (\n        regulate\n    );\n}";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Respite reads your existing mindful-minute entries so you can see your progress without double-counting sessions.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Respite logs each completed breathwork session as a mindful minute in Apple Health.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Respite uses your location to show accurate sunrise and sunset times for your day rhythm.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -967,6 +1164,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2651637E2F8ACBD000F46E33 /* Build configuration list for PBXNativeTarget "StudyLiveWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2651637F2F8ACBD000F46E33 /* Debug */,
+				265163802F8ACBD000F46E33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		26F650C52F67407000E9FBC1 /* Build configuration list for PBXProject "Respite 3.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

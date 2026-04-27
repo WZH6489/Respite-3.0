@@ -9,6 +9,7 @@ private enum MonitorKeys {
     static let familySelectionData = "regulation.familySelectionData"
     static let isUnlocked = "regulation.isUnlocked"
     static let unlockExpiresAt = "regulation.unlockExpiresAt"
+    static let dailyLimitTriggered = "regulation.dailyLimitTriggered"
     static let tiktokSelectionData = "regulation.tiktokSelectionData"
     static let tiktokIsUnlocked = "regulation.tiktokIsUnlocked"
     static let tiktokUnlockExpiresAt = "regulation.tiktokUnlockExpiresAt"
@@ -94,8 +95,12 @@ enum RegulationMonitorShield {
         let defaults = UserDefaults(suiteName: MonitorKeys.suite) ?? .standard
         guard defaults.bool(forKey: MonitorKeys.tiktokIsUnlocked) else { return }
         guard let data = defaults.data(forKey: MonitorKeys.tiktokSelectionData),
-              let tiktok = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data),
-              !tiktok.applicationTokens.isEmpty else { return }
+              let tiktok = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) else { return }
+        let hasTargets =
+            !tiktok.applicationTokens.isEmpty
+            || !tiktok.categoryTokens.isEmpty
+            || !tiktok.webDomainTokens.isEmpty
+        guard hasTargets else { return }
 
         let schedule = DeviceActivitySchedule(
             intervalStart: DateComponents(hour: 0, minute: 0),
@@ -125,8 +130,17 @@ enum RegulationMonitorShield {
         applyMergedShield(defaults)
     }
 
+    static func resetDailyLimitForNewInterval() {
+        let defaults = UserDefaults(suiteName: MonitorKeys.suite) ?? .standard
+        defaults.set(false, forKey: MonitorKeys.dailyLimitTriggered)
+        if !defaults.bool(forKey: MonitorKeys.tiktokIsUnlocked) {
+            clearStore()
+        }
+    }
+
     static func applyShieldAfterThreshold() {
         let defaults = UserDefaults(suiteName: MonitorKeys.suite) ?? .standard
+        defaults.set(true, forKey: MonitorKeys.dailyLimitTriggered)
         if isInGraceWindow(defaults) { return }
         clearTikTokUnlockIfIdleExceeded(defaults)
         applyMergedShield(defaults)
@@ -148,31 +162,35 @@ enum RegulationMonitorShield {
             return try? JSONDecoder().decode(FamilyActivitySelection.self, from: data)
         }()
 
-        let monitoredApps = monitored?.applicationTokens ?? []
-        let tiktokApps = tiktok?.applicationTokens ?? []
-        var apps = monitoredApps.union(tiktokApps)
+        let dailyLimitTriggered = defaults.bool(forKey: MonitorKeys.dailyLimitTriggered)
 
-        let hasCategories = !(monitored?.categoryTokens.isEmpty ?? true)
-        let hasWeb = !(monitored?.webDomainTokens.isEmpty ?? true)
+        let monitoredApps = dailyLimitTriggered ? (monitored?.applicationTokens ?? []) : []
+        let intentApps = tiktok?.applicationTokens ?? []
+        var apps = monitoredApps.union(intentApps)
+
+        let monitoredCategories = dailyLimitTriggered ? (monitored?.categoryTokens ?? []) : []
+        let intentCategories = tiktok?.categoryTokens ?? []
+        var categories = monitoredCategories.union(intentCategories)
+
+        let monitoredWeb = dailyLimitTriggered ? (monitored?.webDomainTokens ?? []) : []
+        let intentWeb = tiktok?.webDomainTokens ?? []
+        var webDomains = monitoredWeb.union(intentWeb)
+
+        let hasCategories = !categories.isEmpty
+        let hasWeb = !webDomains.isEmpty
         if apps.isEmpty && !hasCategories && !hasWeb {
             clearStore()
             return
         }
 
         if shouldTikTokStayUnshielded(defaults) {
-            apps = apps.subtracting(tiktokApps)
+            apps = apps.subtracting(intentApps)
+            categories = categories.subtracting(intentCategories)
+            webDomains = webDomains.subtracting(intentWeb)
         }
 
         store.shield.applications = apps.isEmpty ? nil : apps
-        if let monitored, !monitored.categoryTokens.isEmpty {
-            store.shield.applicationCategories = .specific(monitored.categoryTokens)
-        } else {
-            store.shield.applicationCategories = nil
-        }
-        if let monitored, !monitored.webDomainTokens.isEmpty {
-            store.shield.webDomains = monitored.webDomainTokens
-        } else {
-            store.shield.webDomains = nil
-        }
+        store.shield.applicationCategories = categories.isEmpty ? nil : .specific(categories)
+        store.shield.webDomains = webDomains.isEmpty ? nil : webDomains
     }
 }
