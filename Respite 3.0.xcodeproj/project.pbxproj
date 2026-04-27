@@ -10,7 +10,6 @@
 		2651636A2F8ACBCF00F46E33 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 265163692F8ACBCF00F46E33 /* WidgetKit.framework */; };
 		2651636C2F8ACBCF00F46E33 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2651636B2F8ACBCF00F46E33 /* SwiftUI.framework */; };
 		2651637D2F8ACBD000F46E33 /* StudyLiveWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 265163672F8ACBCF00F46E33 /* StudyLiveWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		269D97F62F9D218F0098E181 /* Standalone-Respite-Presentation.html in Resources */ = {isa = PBXBuildFile; fileRef = 269D97F52F9D218F0098E181 /* Standalone-Respite-Presentation.html */; };
 		E90100012F67407000E9FBC1 /* DeviceActivityReportExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7C4CED61CC5E362FB3FD022C /* DeviceActivityReportExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E90100022F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E90100062F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E90100032F67407000E9FBC1 /* ShieldConfigurationExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E90100072F67407000E9FBC1 /* ShieldConfigurationExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -78,7 +77,6 @@
 		265163692F8ACBCF00F46E33 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2651636B2F8ACBCF00F46E33 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		2682ED9F2F80589B00361DD6 /* DeviceActivityReportExtension-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "DeviceActivityReportExtension-Info.plist"; sourceTree = "<group>"; };
-		269D97F52F9D218F0098E181 /* Standalone-Respite-Presentation.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "Standalone-Respite-Presentation.html"; sourceTree = "<group>"; };
 		26F650CA2F67407000E9FBC1 /* Respite 3.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Respite 3.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C4CED61CC5E362FB3FD022C /* DeviceActivityReportExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = DeviceActivityReportExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E90100062F67407000E9FBC1 /* DeviceActivityMonitorExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeviceActivityMonitorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,7 +233,6 @@
 				265163682F8ACBCF00F46E33 /* Frameworks */,
 				26F650CB2F67407000E9FBC1 /* Products */,
 				2694D3242F8A91DE00990893 /* Reflections */,
-				269D97F52F9D218F0098E181 /* Standalone-Respite-Presentation.html */,
 			);
 			sourceTree = "<group>";
 		};
@@ -477,7 +474,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				269D97F62F9D218F0098E181 /* Standalone-Respite-Presentation.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
